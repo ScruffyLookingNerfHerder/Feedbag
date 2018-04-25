@@ -6,7 +6,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react-dom": "^16.3.2",
+    "react-facebook-auth": "^1.4.0",
+    "react-facebook-login": "^4.0.1",
     "react-scripts": "1.0.14"
   },
   "scripts": {
