@@ -1,0 +1,16 @@
+.carousel-caption {
+  background-image: url("../images/wood4.jpeg");
+  background-repeat: no-repeat;
+  background-size: auto;
+  border-radius: 15px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    font-size: 34px;
+}
+
+p {
+  font-size: 24px;
+}
