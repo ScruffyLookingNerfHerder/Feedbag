@@ -3,6 +3,11 @@ const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+require('dotenv').config();
+
+const cliID = process.env.CLIENT_ID;
+const clieSec= process.env.CLIENT_SECRET;
+
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
