@@ -7,7 +7,12 @@ const RestCard = props => (
     </div>
     <div className="content">
       <p><strong>Name:</strong> {props.name}</p>
-      <p><strong>Address:</strong> {props.location}</p>
+
+      { props.location.address ? (
+        <p><strong>Address:</strong>{props.location.address}</p>
+      ) : (
+        <p><strong>Address:</strong>{props.location.formattedAddress} </p>
+      )}
 
       { props.delivery ? (
         <p><strong>Delivery:</strong> Yes </p>

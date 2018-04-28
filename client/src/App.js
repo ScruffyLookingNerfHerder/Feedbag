@@ -5,15 +5,18 @@ import "./App.css";
 import API from "./API"
 import Wrapper from "./components/Wrapper";
 import RestCard from "./components/RestCard";
+import VenCard from "./components/VenCard";
 import ResultButton from "./components/ResultButton";
+import VenResultButton from "./components/VenResultButton";
 
 class App extends Component {
 
 state = {
   venues: [],
-  singleVen: [],
-  loSearch: "",
-  restSearch: ""
+  singleVen: undefined,
+  loSearch: "arlington va",
+  restSearch: "bar",
+  showRestInfo: true
 }
 
   // componentDidMount() {
@@ -27,43 +30,97 @@ state = {
    });
  };
 
- // handleClick = id => {
- //   this.setState({
- //     [id]: this.id
- //   }).then(loadVen({id}))
- // }
+ handleTru = event => {
+   this.state.showRestInfo === false ?
+     this.setState({ showRestInfo: true })
+     :
+     this.setState({ showRestInfo: false });
+ }
 
   loadRest = event => {
 
     event.preventDefault();
 
     API.getRest(this.state.loSearch, this.state.restSearch)
-    .then(res => { this.setState({ venues: res.data.response.venues })
+    .then(res => {
+      console.log(res.data.response.venues)
+      this.setState({ venues: res.data.response.venues })
     })
     .catch(err => console.log(err));
 
-    API.getRest(this.state.loSearch, this.state.restSearch)
-    .then(res => console.log(res.data.response))
 // this.setState({ venues: res.data.response.venues })
   }
 
   loadVen = event => {
 
-    let id = event.target.id;
-    console.log(id)
-    console.log(`id ${id} was clicked`)
+    event.persist();
+    event.preventDefault();
+    let id = event.currentTarget.id;
+
+    this.handleTru();
 
     API.getVenue(id)
-    .then(res => { this.setState({ singleVen: res.data.response.venue })
+    .then(res => {
+      console.log(res.data.response.venue)
+      this.setState({ singleVen: res.data.response.venue })
     })
     .catch(err => console.log(err));
-
-    API.getVenue(id)
-    .then(res => console.log(res.data.response.venue))
-
   }
 
+// =======================
+  renderRestCard = () => {
+
+    let renderRestCard = this.state.venues.map(restaurant => (
+      <ResultButton
+      key={restaurant.id}
+      id={restaurant.id}
+      clicked={this.showRestInfo}
+      clickVenueBtn={this.loadVen}
+      clickHandleTru={this.handleTru}
+      >
+      {RestCard(restaurant)}
+      </ResultButton>
+    ))
+    console.log(renderRestCard)
+    return renderRestCard;
+  }
+
+  renderVenCard = () => {
+
+    if (this.state.singleVen !== undefined) {
+      let singleVenObj = this.state.singleVen;
+
+        let renderVenObj = {
+              key: singleVenObj.id,
+              id: singleVenObj.id,
+              name: singleVenObj.name,
+              hours: singleVenObj.hours,
+              location: singleVenObj.location,
+              phone: singleVenObj.contact,
+              url: singleVenObj.url
+        }
+
+          console.log(renderVenObj)
+
+            return (
+                <VenResultButton
+                key={renderVenObj.id}
+                id={renderVenObj.id}
+                clicked={this.showRestInfo}
+                clickHandleTru={this.handleTru}
+                >
+                {VenCard(renderVenObj)}
+                </VenResultButton>
+              )
+    }
+  }
+
+
+
+  // =====================
+
   render () {
+
     return (
   <Wrapper>
 
@@ -87,21 +144,8 @@ state = {
       Search
     </button>
 
-    {this.state.venues.map(restaurant => (
-      <ResultButton
-      key={restaurant.id}
-      id={restaurant.id}
-      clickVenueBtn={this.loadVen}
-      >
-      <RestCard
-        id={restaurant.id}
-        name={restaurant.name}
-        location={restaurant.location.address}
-        url={restaurant.url}
-        delivery={restaurant.delivery}
-        />
-      </ResultButton>
-    ))}
+        { this.state.showRestInfo === true ? this.renderRestCard() : this.renderRestCard() && this.renderVenCard() }
+
     </Wrapper>
     )
   }

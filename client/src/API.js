@@ -1,6 +1,7 @@
 import axios from "axios";
 // get the ENV import working!!!
-
+const CLIENT_ID = "S2ZPM0I1JGASJURDWP1TT4NKJ3AN20IK1K0JE0KI0LEP52FF";
+const CLIENT_SECRET = "UJCYMVWC4MUGL5VYS1N3ZNHWIJEHKUYK4QDS2VCNFMXSCVAM";
 
 export default {
   getRest: function(near, query) {
