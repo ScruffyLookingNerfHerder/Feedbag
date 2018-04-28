@@ -6,7 +6,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
-const keys = require('./keys');
+
 require('dotenv').config();
 
 console.log(process.env.TWITTER_CONSUMER_KEY);
