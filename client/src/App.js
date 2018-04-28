@@ -16,6 +16,7 @@ import AuthFailedPage from './pages/AuthFailedPage';
 import TestSpotifyPage from './pages/TestSpotifyPage';
 import TestTwitterPage from './pages/TestTwitterPage';
 import MembersOnlyPage from './pages/MembersOnlyPage';
+import SearchPage from './pages/SearchPage';
 
 class App extends Component {
   componentDidMount() {
@@ -52,6 +53,7 @@ class App extends Component {
               <Route exact path="/testspotify" component={TestSpotifyPage} />
               <Route exact path="/testtwitter" component={TestTwitterPage} />
               <ProtectedRoute exact path="/membersonly" component={MembersOnlyPage} />
+              <ProtectedRoute exact path="/search" component={SearchPage} />
               <Route component={NotFoundPage} />
             </Switch>
           </Fragment>
