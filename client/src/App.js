@@ -1,85 +1,64 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import FacebookLogin from 'react-facebook-login';
-import FacebookLoginButton from './components/FacebookLoginButton';
+import axios from 'axios';
+import React, { Component, Fragment } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+import Navbar from './components/Navbar';
+import ProtectedRoute from './components/ProtectedRoute';
 
+import { withUser, update } from './services/withUser';
 
-
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <div className="App-header">
-//           <img src={logo} className="App-logo" alt="logo" />
-//           <h2>Welcome to React</h2>
-//         </div>
-//         <p className="App-intro">
-//           To get started, edit <code>src/App.js</code> and save to reload.
-//         </p>
-//       </div>
-//     );
-//   }
-// }
-
-// class App extends React.Component {
-//   responseFacebook(response) {
-//     console.log(response)
-//   }
-//   render() {
-//     return (
-//       <FacebookLogin
-//         appId = "218987942202868"
-//         autoLoad = {true}
-//         fields = "name, email, picture"
-//         callback = {this.responseFacebook}
-//         />
-//     )
-//   }
-// }
+import CreateAccountPage from './pages/CreateAccountPage';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import NotFoundPage from './pages/NotFoundPage';
+import AuthFailedPage from './pages/AuthFailedPage';
+import TestSpotifyPage from './pages/TestSpotifyPage';
+import TestTwitterPage from './pages/TestTwitterPage';
+import MembersOnlyPage from './pages/MembersOnlyPage';
 
 class App extends Component {
-  state = {
-    username: null
-  };
-  onFacebookLogin = (loginStatus, resultObject) => {
-    if (loginStatus === true){
-      this.setState({
-        username: resultObject.user.name
+  componentDidMount() {
+    // this is going to double check that the user is still actually logged in
+    // if the app is reloaded. it's possible that we still have a user in sessionStorage
+    // but the user's session cookie expired.
+    axios.get('/api/auth')
+      .then(res => {
+        // if we get here, the user's session is still good. we'll update the user
+        // to make sure we're using the most recent values just in case
+        update(res.data);
+      })
+      .catch(err => {
+        // if we get a 401 response, that means the user is no longer logged in
+        if (err.response.status === 401) {
+          update(null);
+        }
       });
-    } else {
-      alert('Facebook login error');
-    }
   }
-
   render() {
-    const { username } = this.state;
+    const { user } = this.props;
     return (
-      <div className = "App">
-        <header className = "App-header">
-          <h1 className = "App-title"> React Social Media Login </h1>
-          </header>
-        <div className = "App-intro">
-        { !username &&
-          <div>
-            <p> Click one of the buttons below to login </p>
-            <FacebookLoginButton onLogin = {this.onFacebookLogin}>
-            <button>Facebook</button>
-            </FacebookLoginButton>
-          </div>
-
-          }
-          {username &&
-            <p> Welcome back, {username} </p>
-          }
-          </div>
-      </div>
+      <Router>
+        <MuiThemeProvider>
+          <Fragment>
+            <Navbar
+              user={user}
+            />
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/create" component={CreateAccountPage} />
+              <Route exact path="/auth/failed" component={AuthFailedPage} />
+              <Route exact path="/testspotify" component={TestSpotifyPage} />
+              <Route exact path="/testtwitter" component={TestTwitterPage} />
+              <ProtectedRoute exact path="/membersonly" component={MembersOnlyPage} />
+              <Route component={NotFoundPage} />
+            </Switch>
+          </Fragment>
+        </MuiThemeProvider>
+      </Router>
     );
   }
-
 }
 
-
-
-export default App;
+export default withUser(App);

@@ -5,9 +5,10 @@
   "main": "server.js",
   "scripts": {
     "server": "node server.js",
-    "client": "node scripts/start-client.js",
-    "start": "concurrently \"nodemon server.js\" \"npm run client\"",
-    "build": "node scripts/build.js",
+    "client": "cd client && npm run start",
+    "start": "./node_modules/.bin/concurrently \"nodemon server.js\" \"./node_modules/.bin/nodemon\" \"npm run client\"",
+    "build": "cd client && npm run build",
+    "deploy": "yarn build && git add . && git commit -m \"Building for production\" && git push heroku master",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -18,13 +19,20 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "dotenv": "^5.0.1",
     "express": "^4.15.4",
+    "express-session": "^1.15.6",
     "express-subdomain": "^1.0.5",
+    "mongoose": "^5.0.14",
+    "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
-    "passport-google-oauth20": "^1.0.0"
+    "passport-google-oauth20": "^1.0.0",
+    "passport-local": "^1.0.0",
+    "passport-twitter": "^1.0.4",
+    "twitter": "^1.7.1"
   }
 }

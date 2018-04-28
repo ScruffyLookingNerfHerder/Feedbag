@@ -8,6 +8,10 @@ google: {
 facebook: {
   clientID: "218987942202868",
   clientSecret: "113dd4ec36345d76769bd908432fc363"
+},
+twitter: {
+  consumerKey: "N0uL1hdYHHzbjkvjKqbVX3kyr",
+  consumerSecret: "fxZHLZenQQ11Uo2M3dfbj6d3giep0IDwFdlKEJuOIs6GJ7PoV"
 }
 
 };
