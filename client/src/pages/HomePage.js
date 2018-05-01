@@ -13,7 +13,7 @@ class HomePage extends Component {
     if (!this.props.user) {
       return;
     }
-
+    console.log(this.props.user);
     axios.get('/api/stuff')
       .then(res => {
         this.setState({
@@ -53,7 +53,7 @@ class HomePage extends Component {
           <Link to="/membersonly">
             Click here
           </Link> to go the members only area. If you are not logged in,
-          it'll redirect you to the login page.
+          it'll redirect you to the login page. <Link to="/search"> Click here </Link> to go to the search page and find Restaurants near you!
         </p>
       </Fragment>
     );

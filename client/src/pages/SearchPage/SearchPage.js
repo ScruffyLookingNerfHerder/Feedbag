@@ -8,6 +8,7 @@ import RestCard from "../../components/RestCard";
 import VenCard from "../../components/VenCard";
 import ResultButton from "../../components/ResultButton";
 import VenResultButton from "../../components/VenResultButton";
+import { Link } from 'react-router-dom';
 
 class SearchPage extends Component {
 
@@ -125,6 +126,7 @@ state = {
   <Wrapper>
 
     <p> hello world </p>
+    <p> <Link to="/"> Click Here </Link> to go back to the home page! </p>
     <input
       name="loSearch"
       value={this.state.loSearch}

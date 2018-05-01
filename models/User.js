@@ -24,8 +24,12 @@ const UserSchema = new Schema({
     type: String
   },
   userid: {
-    type: String 
-  }
+    type: String
+  },
+  recipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
+  restaurants: [ { type: Schema.Types.ObjectId, ref: 'Restaurant'}],
+  todos: [ { type: Schema.Types.ObjectId, ref: "Todo" }]
+
 });
 
 // This pre "save" handler will be called before each time the user is saved.

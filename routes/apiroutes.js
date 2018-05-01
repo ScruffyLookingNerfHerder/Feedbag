@@ -6,6 +6,7 @@ const db = require('../models');
 const mustBeLoggedIn = require('../middleware/mustBeLoggedIn');
 const mongoose = require('mongoose');
 const Twitter = require('twitter');
+const RestaurantController = require("../../controllers/ResaurantsController");
 
 async function getCurrentUser(req, res){
   const { id, username } = req.user;
