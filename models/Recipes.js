@@ -8,8 +8,7 @@ href: String,
 ingredients: String,
 thumbnail: String,
 User:{
-  type: String,
-  ref: 'users'
+  type: Schema.Types.ObjectId, ref: "users"
 }
 });
 

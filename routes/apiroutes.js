@@ -7,6 +7,8 @@ const mustBeLoggedIn = require('../middleware/mustBeLoggedIn');
 const mongoose = require('mongoose');
 const Twitter = require('twitter');
 const RestaurantController = require("../controllers/RestaurantsController");
+const RecipeController = require("../controllers/RecipesController");
+const ToDoController = require("../controllers/ToDoController");
 
 async function getCurrentUser(req, res){
   const { id, username } = req.user;
@@ -76,6 +78,22 @@ router.route('/auth')
         .get(mustBeLoggedIn(), RestaurantController.find)
         .put(mustBeLoggedIn(), RestaurantController.update)
         .delete(mustBeLoggedIn(), RestaurantController.remove)
+
+      router.route('/Recipes')
+        .get(mustBeLoggedIn(), RecipeController.findAll)
+        .post(mustBeLoggedIn(), RecipeController.create)
+      router.route('/Recipes/:userid')
+        .get(mustBeLoggedIn(), RecipeController.find)
+        .put(mustBeLoggedIn(), RecipeController.update)
+        .delete(mustBeLoggedIn(), RecipeController.remove)
+
+      router.route('/Groceries')
+        .get(mustBeLoggedIn(), ToDoController.findAll)
+        .post(mustBeLoggedIn(), ToDoController.create)
+      router.route('/Grocerices/:userid')
+        .get(mustBeLoggedIn(), ToDoController.find)
+        .put(mustBeLoggedIn(), ToDoController.update)
+        .delete(mustBeLoggedIn(), ToDoController.update)
 
 
 module.exports = router;

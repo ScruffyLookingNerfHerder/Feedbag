@@ -5,8 +5,7 @@ const TodoSchema = new mongoose.Schema({
 text: String,
 complete: Boolean,
 User:{
-type: String,
-ref: 'users'
+  type: Schema.Types.ObjectId, ref: "users"
 }
 });
 
