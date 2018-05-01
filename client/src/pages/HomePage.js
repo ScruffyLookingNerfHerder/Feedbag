@@ -14,19 +14,21 @@ class HomePage extends Component {
       return;
     }
     console.log(this.props.user);
-    axios.get('/api/stuff')
-      .then(res => {
-        this.setState({
-          stuff: res.data
+
+
+      axios.get('/api/Restaurants/' + this.props.user.id)
+        .then(res => {
+          console.log(res.data);
+          this.setState({
+            stuff: res.data.name
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          this.setState({
+            stuff:[]
+          });
         });
-      })
-      .catch(err => {
-        // if we got an error, we'll just log it and set stuff to an empty array
-        console.log(err);
-        this.setState({
-          stuff: []
-        });
-      });
   }
   render() {
     const { user } = this.props; // get the user prop from props

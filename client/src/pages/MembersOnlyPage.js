@@ -6,7 +6,7 @@ const MembersOnlyPage = (props) => {
   // the ProtectedRoute component, so we don't need to
   // directly use withUser
   const { user } = props;
-
+  console.log(user);
   return (
     <section>
       <h1>Members Only Area</h1>

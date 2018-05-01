@@ -8,12 +8,11 @@ websiteURL: String,
 address: String,
 photos: String,
 User:{
-  type: String,
-  ref: 'users'
+  type: Schema.Types.ObjectId, ref: "users"
 }
 
 });
 
-const Restaurant = mongoose.model('Restaurant', RestaurantSchema);
+const Restaurant = mongoose.model("Restaurant", RestaurantSchema);
 
 module.exports = Restaurant

@@ -6,7 +6,7 @@ const db = require('../models');
 const mustBeLoggedIn = require('../middleware/mustBeLoggedIn');
 const mongoose = require('mongoose');
 const Twitter = require('twitter');
-const RestaurantController = require("../../controllers/ResaurantsController");
+const RestaurantController = require("../controllers/RestaurantsController");
 
 async function getCurrentUser(req, res){
   const { id, username } = req.user;
@@ -68,13 +68,14 @@ router.route('/auth')
           });
       });
 
-      router.route('/stuff')
-        .get(mustBeLoggedIn(), (req, res) => {
-          res.json([
-            "STAR WARS NOTHING BUT STAR WARS",
-            "Homer Simpson",
-            "Doomguy"
-          ]);
-        });
+      router.route('/Restaurants')
+        .get(mustBeLoggedIn(), RestaurantController.findAll)
+        .post(RestaurantController.create);
+
+      router.route('/Restaurants/:userid')
+        .get(mustBeLoggedIn(), RestaurantController.find)
+        .put(mustBeLoggedIn(), RestaurantController.update)
+        .delete(mustBeLoggedIn(), RestaurantController.remove)
+
 
 module.exports = router;
