@@ -1,29 +1,15 @@
-import React, { Component } from "react";
-<<<<<<< HEAD:client/src/pages/searchPage.js
-import logo from "./logo.svg";
-import "./App.css";
-// import restContainer from "./components/restContainer";
-import API from "./API"
-import Wrapper from "./components/Wrapper";
-import RestCard from "./components/RestCard";
-import VenCard from "./components/VenCard";
-import ResultButton from "./components/ResultButton";
-import VenResultButton from "./components/VenResultButton";
-import RecipeCard from "./components/RecipeCard";
-import RecResultButton from "./components/RecResultButton";
-// import InputFields from "./components/InputFields";
 
-class App extends Component {
-=======
 
 // import "../../App.css";
-
+import React, { Component } from "react";
 import API from "../../API"
 import Wrapper from "../../components/Wrapper";
 import RestCard from "../../components/RestCard";
 import VenCard from "../../components/VenCard";
 import ResultButton from "../../components/ResultButton";
 import VenResultButton from "../../components/VenResultButton";
+import RecipeCard from "../../components/RecipeCard";
+import RecResultButton from "../../components/RecResultButton";
 import { Link } from 'react-router-dom';
 import { withUser } from '../../services/withUser';
 import axios from "axios";
@@ -44,7 +30,6 @@ class SearchPage extends Component {
           console.log(err);
         });
   }
->>>>>>> origin/SeedingAssociationBranch:client/src/pages/SearchPage/SearchPage.js
 
 state = {
   venues: [],
@@ -211,7 +196,6 @@ state = {
   }
   else {
 
-<<<<<<< HEAD:client/src/pages/searchPage.js
     return (
       <Wrapper>
 
@@ -244,8 +228,5 @@ state = {
   }
   }
 }
-=======
-export default SearchPage;
->>>>>>> origin/SeedingAssociationBranch:client/src/pages/SearchPage/SearchPage.js
 
-export default App;
+export default SearchPage;
