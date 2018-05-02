@@ -17,6 +17,7 @@ import TestSpotifyPage from './pages/TestSpotifyPage';
 import TestTwitterPage from './pages/TestTwitterPage';
 import MembersOnlyPage from './pages/MembersOnlyPage';
 import SearchPage from './pages/SearchPage';
+import UserPage from './pages/Userpage';
 
 class App extends Component {
   componentDidMount() {
@@ -47,6 +48,7 @@ class App extends Component {
             />
             <Switch>
               <Route exact path="/" component={HomePage} />
+              <Route exact path="/user" component={UserPage} />
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/create" component={CreateAccountPage} />
               <Route exact path="/auth/failed" component={AuthFailedPage} />
