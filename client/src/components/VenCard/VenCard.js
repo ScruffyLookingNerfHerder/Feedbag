@@ -6,6 +6,11 @@ const VenCard = props => (
     <div className="img-container">
     </div>
     <div className="content">
+
+    <div>
+      <img src={ props.img } alt="img"/>
+    </div>
+
       <p><strong>Name:</strong> {props.name}</p>
 
       { props.location ? (
@@ -26,19 +31,10 @@ const VenCard = props => (
         <p><strong>Contact:</strong>No Info Available </p>
       )}
 
-      <p><strong>Link:</strong>{props.url}</p>
+      <p><a href={props.url}><strong>Link</strong></a></p>
 
     </div>
   </div>
 );
 
 export default VenCard;
-
-
-// // <p><strong>Website:</strong> {props.links}</p>
-//
-// { props.links ? (
-//   <p><strong>Delivery:</strong> {props.links.url}</p>
-// ) : (
-//   <p>No Website Available</p>
-// )}

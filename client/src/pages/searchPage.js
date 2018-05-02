@@ -8,22 +8,22 @@ import RestCard from "./components/RestCard";
 import VenCard from "./components/VenCard";
 import ResultButton from "./components/ResultButton";
 import VenResultButton from "./components/VenResultButton";
+import RecipeCard from "./components/RecipeCard";
+import RecResultButton from "./components/RecResultButton";
+// import InputFields from "./components/InputFields";
 
-class searchPage extends Component {
+class App extends Component {
 
 state = {
   venues: [],
+  recipes: [],
   singleVen: undefined,
   loSearch: "arlington va",
-  restSearch: "bar",
+  restSearch: "burger",
   showRestInfo: true
 }
 
-  // componentDidMount() {
-  //   this.loadRest();
-  // }
-
-  handleInputChange = event => {
+ handleInputChange = event => {
    const { name, value } = event.target;
    this.setState({
      [name]: value
@@ -31,33 +31,37 @@ state = {
  };
 
  handleTru = event => {
-   this.state.showRestInfo === false ?
-     this.setState({ showRestInfo: true })
-     :
-     this.setState({ showRestInfo: false });
+   if (this.state.showRestInfo === true) {
+     this.setState({ showRestInfo: false })
+   }
+
+  else if (this.state.showRestInfo === false && this.state.singleVen !== undefined) {
+    this.setState({ showRestInfo: false })
+  }
  }
+
+// ===================
 
   loadRest = event => {
 
     event.preventDefault();
 
-    API.getRest(this.state.loSearch, this.state.restSearch)
-    .then(res => {
-      console.log(res.data.response.venues)
-      this.setState({ venues: res.data.response.venues })
-    })
-    .catch(err => console.log(err));
+      API.getRest(this.state.loSearch, this.state.restSearch)
+      .then(res => {
+        this.setState({ venues: res.data.response.venues })
+      })
+      .catch(err => console.log(err));
 
-// this.setState({ venues: res.data.response.venues })
+        this.setState({ singleVen: undefined })
+        this.loadRecipe();
   }
 
   loadVen = event => {
-
-    event.persist();
-    event.preventDefault();
     let id = event.currentTarget.id;
 
-    this.handleTru();
+      event.persist();
+        event.preventDefault();
+          this.handleTru();
 
     API.getVenue(id)
     .then(res => {
@@ -67,6 +71,16 @@ state = {
     .catch(err => console.log(err));
   }
 
+  loadRecipe = event => {
+
+    API.getRec(this.state.restSearch)
+    .then(res => {
+      console.log(res)
+      this.setState({ recipes: res.data })
+    })
+    .catch(err => console.log(err));
+    console.log(this.state.recipes)
+  }
 // =======================
   renderRestCard = () => {
 
@@ -81,15 +95,16 @@ state = {
       {RestCard(restaurant)}
       </ResultButton>
     ))
-    console.log(renderRestCard)
     return renderRestCard;
   }
 
   renderVenCard = () => {
 
     if (this.state.singleVen !== undefined) {
+      let imgPre = "https://igx.4sqi.net/img/general/width960"
+      let imgSuf = this.state.singleVen.photos.groups[0].items[0].suffix;
+      console.log(imgPre + imgSuf)
       let singleVenObj = this.state.singleVen;
-
         let renderVenObj = {
               key: singleVenObj.id,
               id: singleVenObj.id,
@@ -97,11 +112,9 @@ state = {
               hours: singleVenObj.hours,
               location: singleVenObj.location,
               phone: singleVenObj.contact,
-              url: singleVenObj.url
+              url: singleVenObj.url,
+              img: imgPre + imgSuf
         }
-
-          console.log(renderVenObj)
-
             return (
                 <VenResultButton
                 key={renderVenObj.id}
@@ -115,12 +128,25 @@ state = {
     }
   }
 
+  renderRecCard = () => {
 
+    let renderRestCard = this.state.recipes.map(recipe => (
+      <RecResultButton
+        key={recipe.title}
+        id={recipe.title}
+        href={recipe.href}
+        >
+        {RecipeCard(recipe)}
+        </RecResultButton>
+      ))
+    return renderRestCard;
+  }
 
   // =====================
 
   render () {
 
+  if (this.state.showRestInfo === true) {
     return (
   <Wrapper>
 
@@ -144,13 +170,45 @@ state = {
       Search
     </button>
 
-        { this.state.showRestInfo === true ? this.renderRestCard() : this.renderRestCard() && this.renderVenCard() }
+        { this.renderRestCard() }
+        { this.renderRecCard() }
 
     </Wrapper>
     )
   }
+  else {
+
+    return (
+      <Wrapper>
+
+        <p> hello world </p>
+        <input
+          name="loSearch"
+          value={this.state.loSearch}
+          onChange={this.handleInputChange}
+          placeholder="Location Search"
+          />
+        <input
+          name="restSearch"
+          value={this.state.restSearch}
+          onChange={this.handleInputChange}
+          placeholder="Restaurant Search"
+          />
+        <button
+          onClick={this.loadRest}
+          type="success"
+          >
+          Search
+        </button>
+
+            { this.renderRestCard() }
+            { this.renderRecCard() }
+            { this.renderVenCard() }
+
+      </Wrapper>
+    )
+  }
+  }
 }
 
-export default searchPage;
-
-//make a button component called "buttonResult or something. render the rest card inside of it. "
+export default App;
