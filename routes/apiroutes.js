@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const passport = require('passport');
@@ -9,6 +10,16 @@ const Twitter = require('twitter');
 const RestaurantController = require("../controllers/RestaurantsController");
 const RecipeController = require("../controllers/RecipesController");
 const ToDoController = require("../controllers/ToDoController");
+const recipeapi = require("../controllers/recipeapi");
+
+
+
+const FOOD2FORK = 'https://food2fork.com/api/search?key='
+const APIKey = process.env.FOOD_T0_FORK_API;
+
+
+
+
 
 async function getCurrentUser(req, res){
   const { id, username } = req.user;
@@ -94,6 +105,11 @@ router.route('/auth')
         .get(mustBeLoggedIn(), ToDoController.find)
         .put(mustBeLoggedIn(), ToDoController.update)
         .delete(mustBeLoggedIn(), ToDoController.update)
+
+      router.route('/RecipeEXP/:recipekeywords')
+        .get(mustBeLoggedIn(), recipeapi.Food2forkapi)
+
+
 
 
 module.exports = router;
