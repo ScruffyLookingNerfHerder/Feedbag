@@ -2,6 +2,14 @@ const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
+const morgan = require('morgan');
+const bodyparser = require('body-parser');
+
+
+app.use(morgan('dev'));
+app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyparser.json());
+
 
 require('dotenv').config();
 
@@ -13,12 +21,26 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-// Send every request to the React app
-// Define any API routes before this runs
-app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+require('./passport')(app);
+
+app.use(require('./routes'));
+
+app.use((error, req, res, next) => {
+  console.error(error);
+  res.status(500).json({
+    error
+  })
 });
 
-app.listen(PORT, function() {
-  console.log(`🌎 ==> Server now on port ${PORT}!`);
-});
+// configure mongoose
+require('./middleware/mongoose')()
+  .then(() => {
+    // mongo is connected, so now we can start the express server.
+    app.listen(PORT, () => console.log(`Server up and running on ${PORT}.`));
+  })
+  .catch(err => {
+    // an error occurred connecting to mongo!
+    // log the error and exit
+    console.error('Unable to connect to mongo.')
+    console.error(err);
+  });

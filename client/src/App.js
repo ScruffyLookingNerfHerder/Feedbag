@@ -1,156 +1,68 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-// import restContainer from "./components/restContainer";
-import API from "./API"
-import Wrapper from "./components/Wrapper";
-import RestCard from "./components/RestCard";
-import VenCard from "./components/VenCard";
-import ResultButton from "./components/ResultButton";
-import VenResultButton from "./components/VenResultButton";
+import axios from 'axios';
+import React, { Component, Fragment } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+import Navbar from './components/Navbar';
+import ProtectedRoute from './components/ProtectedRoute';
+
+import { withUser, update } from './services/withUser';
+
+import CreateAccountPage from './pages/CreateAccountPage';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import NotFoundPage from './pages/NotFoundPage';
+import AuthFailedPage from './pages/AuthFailedPage';
+import TestSpotifyPage from './pages/TestSpotifyPage';
+import TestTwitterPage from './pages/TestTwitterPage';
+import MembersOnlyPage from './pages/MembersOnlyPage';
+import SearchPage from './pages/SearchPage';
+import UserPage from './pages/Userpage';
 
 class App extends Component {
-
-state = {
-  venues: [],
-  singleVen: undefined,
-  loSearch: "arlington va",
-  restSearch: "bar",
-  showRestInfo: true
-}
-
-  // componentDidMount() {
-  //   this.loadRest();
-  // }
-
-  handleInputChange = event => {
-   const { name, value } = event.target;
-   this.setState({
-     [name]: value
-   });
- };
-
- handleTru = event => {
-   this.state.showRestInfo === false ?
-     this.setState({ showRestInfo: true })
-     :
-     this.setState({ showRestInfo: false });
- }
-
-  loadRest = event => {
-
-    event.preventDefault();
-
-    API.getRest(this.state.loSearch, this.state.restSearch)
-    .then(res => {
-      console.log(res.data.response.venues)
-      this.setState({ venues: res.data.response.venues })
-    })
-    .catch(err => console.log(err));
-
-// this.setState({ venues: res.data.response.venues })
-  }
-
-  loadVen = event => {
-
-    event.persist();
-    event.preventDefault();
-    let id = event.currentTarget.id;
-
-    this.handleTru();
-
-    API.getVenue(id)
-    .then(res => {
-      console.log(res.data.response.venue)
-      this.setState({ singleVen: res.data.response.venue })
-    })
-    .catch(err => console.log(err));
-  }
-
-// =======================
-  renderRestCard = () => {
-
-    let renderRestCard = this.state.venues.map(restaurant => (
-      <ResultButton
-      key={restaurant.id}
-      id={restaurant.id}
-      clicked={this.showRestInfo}
-      clickVenueBtn={this.loadVen}
-      clickHandleTru={this.handleTru}
-      >
-      {RestCard(restaurant)}
-      </ResultButton>
-    ))
-    console.log(renderRestCard)
-    return renderRestCard;
-  }
-
-  renderVenCard = () => {
-
-    if (this.state.singleVen !== undefined) {
-      let singleVenObj = this.state.singleVen;
-
-        let renderVenObj = {
-              key: singleVenObj.id,
-              id: singleVenObj.id,
-              name: singleVenObj.name,
-              hours: singleVenObj.hours,
-              location: singleVenObj.location,
-              phone: singleVenObj.contact,
-              url: singleVenObj.url
+  componentDidMount() {
+    // this is going to double check that the user is still actually logged in
+    // if the app is reloaded. it's possible that we still have a user in sessionStorage
+    // but the user's session cookie expired.
+    axios.get('/api/auth')
+      .then(res => {
+        // if we get here, the user's session is still good. we'll update the user
+        // to make sure we're using the most recent values just in case
+        update(res.data);
+      })
+      .catch(err => {
+        // if we get a 401 response, that means the user is no longer logged in
+        if (err.response.status === 401) {
+          update(null);
         }
-
-          console.log(renderVenObj)
-
-            return (
-                <VenResultButton
-                key={renderVenObj.id}
-                id={renderVenObj.id}
-                clicked={this.showRestInfo}
-                clickHandleTru={this.handleTru}
-                >
-                {VenCard(renderVenObj)}
-                </VenResultButton>
-              )
-    }
+      });
   }
-
-
-
-  // =====================
-
-  render () {
-
+  render() {
+    const { user } = this.props;
     return (
-  <Wrapper>
-
-    <p> hello world </p>
-    <input
-      name="loSearch"
-      value={this.state.loSearch}
-      onChange={this.handleInputChange}
-      placeholder="Location Search"
-      />
-    <input
-      name="restSearch"
-      value={this.state.restSearch}
-      onChange={this.handleInputChange}
-      placeholder="Restaurant Search"
-      />
-    <button
-      onClick={this.loadRest}
-      type="success"
-      >
-      Search
-    </button>
-
-        { this.state.showRestInfo === true ? this.renderRestCard() : this.renderRestCard() && this.renderVenCard() }
-
-    </Wrapper>
-    )
+      <Router>
+        <MuiThemeProvider>
+          <Fragment>
+            <Navbar
+              user={user}
+            />
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              <Route exact path="/user" component={UserPage} />
+              <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/create" component={CreateAccountPage} />
+              <Route exact path="/auth/failed" component={AuthFailedPage} />
+              <Route exact path="/testspotify" component={TestSpotifyPage} />
+              <Route exact path="/testtwitter" component={TestTwitterPage} />
+              <ProtectedRoute exact path="/membersonly" component={MembersOnlyPage} />
+              <ProtectedRoute exact path="/search" component={SearchPage} />
+              <Route component={NotFoundPage} />
+            </Switch>
+          </Fragment>
+        </MuiThemeProvider>
+      </Router>
+    );
   }
 }
 
-export default App;
-
-//make a button component called "buttonResult or something. render the rest card inside of it. "
+export default withUser(App);
