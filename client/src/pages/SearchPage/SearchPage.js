@@ -27,7 +27,7 @@ class SearchPage extends Component {
         .catch(err => {
           console.log(err);
         });
-      axios.get('/api/RecipeEXP/' + "onion")
+      axios.get('/api/RecipeEXP/' + "schnitzel")
         .then(res => {
           console.log(res.data);
         })
