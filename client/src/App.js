@@ -48,7 +48,6 @@ class App extends Component {
             />
             <Switch>
               <Route exact path="/" component={HomePage} />
-              <Route exact path="/user" component={UserPage} />
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/create" component={CreateAccountPage} />
               <Route exact path="/auth/failed" component={AuthFailedPage} />
@@ -56,6 +55,7 @@ class App extends Component {
               <Route exact path="/testtwitter" component={TestTwitterPage} />
               <ProtectedRoute exact path="/membersonly" component={MembersOnlyPage} />
               <ProtectedRoute exact path="/search" component={SearchPage} />
+              <ProtectedRoute exact path="/user" component={UserPage} />
               <Route component={NotFoundPage} />
             </Switch>
           </Fragment>

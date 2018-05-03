@@ -4,10 +4,6 @@ import axios from "axios";
 import AuthFailedPage from "../AuthFailedPage"
 
 class Userpage extends Component {
-state ={
-  stuff: null
-}
-
 
 componentDidMount() {
 // only try loading stuff if the user is logged in.
@@ -30,10 +26,10 @@ render() {
 
     return (
       <div>
-        <p> Welcome! </p>
+        <p> Welcome {user.username}! </p>
       </div>
     )
   }
 }
 
-export default Userpage;
+export default withUser(Userpage);

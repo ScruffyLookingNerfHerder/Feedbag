@@ -9,7 +9,7 @@ const LocalStrategy = require('passport-local').Strategy;
 
 require('dotenv').config();
 
-console.log(process.env.TWITTER_CONSUMER_KEY);
+
 
 module.exports = (app) => {
   app.use(cookieparser());
