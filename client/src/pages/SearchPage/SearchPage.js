@@ -11,6 +11,7 @@ import RecResultButton from "../../components/RecResultButton";
 import { Link } from 'react-router-dom';
 import { withUser } from '../../services/withUser';
 import axios from "axios";
+import scraper from '../../utils/scraper'
 
 class SearchPage extends Component {
 
@@ -27,13 +28,7 @@ class SearchPage extends Component {
         .catch(err => {
           console.log(err);
         });
-      axios.get('/api/RecipeEXP/' + "schnitzel")
-        .then(res => {
-          console.log(res.data);
-        })
-        .catch(err => {
-          console.log(err)
-        })
+
   }
 
 state = {
@@ -98,11 +93,14 @@ state = {
     API.getRec(this.state.restSearch)
     .then(res => {
       console.log(res)
-      console.log("above")
-      this.setState({ recipes: res.data.recipes })
+
+      const canscrape =["All Recipes","Closet Cooking", "101 Cookbooks", "BBC Good Food", "The Pioneer Woman", "Bon Appetit", "Jamie Oliver", "BBC Food", "Epicurious", "Tasty Kitchen", "Cookstr", "Simply Recipes"]
+      const filteredrecs = res.data.recipes.filter(recipe => canscrape.includes(recipe.publisher))
+      console.log(filteredrecs)
+      this.setState({ recipes: filteredrecs })
     })
     .catch(err => console.log(err));
-    console.log(this.state.recipes)
+
   }
 // =======================
   renderRestCard = () => {
@@ -126,7 +124,7 @@ state = {
     if (this.state.singleVen !== undefined) {
       let imgPre = "https://igx.4sqi.net/img/general/width960"
       let imgSuf = this.state.singleVen.photos.groups[0].items[0].suffix;
-      console.log(imgPre + imgSuf)
+
       let singleVenObj = this.state.singleVen;
         let renderVenObj = {
               key: singleVenObj.id,
@@ -152,12 +150,23 @@ state = {
   }
 
   renderRecCard = () => {
-
+    let f2fingredients
     let renderRestCard = this.state.recipes.map(recipe => (
+    console.log(recipe.recipe_id),
+    axios.get('/RecipeEXP/' + recipe.recipe_id)
+    .then(res =>{
+      console.log(res.data)
+      f2fingredients = res.data
+
+    })
+    .catch(err =>{
+      console.log(err)
+    }),
       <RecResultButton
         key={recipe.title}
         id={recipe.title}
         href={recipe.source_url}
+        ingredients = {f2fingredients}
         >
         {RecipeCard(recipe)}
         </RecResultButton>
