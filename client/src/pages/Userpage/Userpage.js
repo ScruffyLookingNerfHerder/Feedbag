@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { withUser } from '../../services/withUser';
 import axios from "axios";
-import AuthFailedPage from "../AuthFailedPage"
+import AuthFailedPage from "../AuthFailedPage";
+import SiteNav from "../../components/SiteNav";
+import Jumbotron from "../../components/Jumbotron";
+import Panel from "../../components/Panel";
+import Circle from "../../components/Carousel"
 
 class Userpage extends Component {
 
@@ -25,8 +29,11 @@ render() {
 
 
     return (
-      <div>
-        <p> Welcome {user.username}! </p>
+      <div className = "container">
+        <Jumbotron />
+        <SiteNav />
+        <Circle />
+        <Panel />
       </div>
     )
   }
