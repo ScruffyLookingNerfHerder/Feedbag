@@ -29,7 +29,14 @@ class SearchPage extends Component {
           console.log(err);
         });
 
+    axios.get('/api/Ingredients/35119')
+      .then(res => {
+        console.log(res.data);
+      }).catch(err => {
+        console.log(err);
+      })
   }
+
 
 state = {
   venues: [],
@@ -152,12 +159,12 @@ state = {
   renderRecCard = () => {
     let f2fingredients
     let renderRestCard = this.state.recipes.map(recipe => (
-    console.log(recipe.recipe_id),
-    axios.get('/RecipeEXP/' + recipe.recipe_id)
-    .then(res =>{
-      console.log(res.data)
-      f2fingredients = res.data
 
+    axios.get('/api/Ingredients/' + recipe.recipe_id)
+    .then(res =>{
+      recipe.ingredients = res.data.ingredients
+
+      console.log(recipe)
     })
     .catch(err =>{
       console.log(err)
@@ -166,7 +173,7 @@ state = {
         key={recipe.title}
         id={recipe.title}
         href={recipe.source_url}
-        ingredients = {f2fingredients}
+        ingredients = {recipe.ingredients}
         >
         {RecipeCard(recipe)}
         </RecResultButton>

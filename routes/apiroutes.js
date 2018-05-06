@@ -109,8 +109,9 @@ router.route('/auth')
       router.route('/RecipeEXP/:recipekeywords')
         .get(mustBeLoggedIn(), recipeapi.Food2forkapi)
 
-      router.route('/RecipeEXP/:recipe_id')
+      router.route('/Ingredients/:recipeid')
         .get(mustBeLoggedIn(), recipeapi.Food2forkIngredients)
+      
 
 
 

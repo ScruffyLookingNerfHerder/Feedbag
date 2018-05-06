@@ -8,7 +8,7 @@ module.exports = {
     Food2forkapi: function(req, res){
 
       const RecipeQuery = req.params.recipekeywords;
-      const url = `${FOOD2FORK}${APIKey}&q=${RecipeQuery}`;
+      const url = `${FOOD2FORK}${APIKey}&q=${RecipeQuery}&count=2`;
 
       return axios.get(url)
       .then(response => res.json(response.data))
@@ -16,25 +16,49 @@ module.exports = {
       .catch(error => console.error(error));
     },
     Food2forkIngredients: function(req, res){
-      const IngredientsQuery = "http://food2fork.com/view/" + req.params.id
-      console.log(IngredientsQuery)
-      return axios.get(IngredientsQuery)
+      const IngredientsQuery = req.params.recipeid
+      const url = `http://food2fork.com/view/${IngredientsQuery}`
+      console.log(url)
+      return axios.get(url)
       .then((response) =>{
         let $ = cheerio.load(response.data);
-        let ingredients = {
+        let Ingredients = {
           ingredients:[]
         };
         $(".span5.offset1.about-container li").each(function(i, element){
           let ingredient = $(element).text();
-          ingredients.push(ingredient)
+          Ingredients.ingredients.push(ingredient)
         })
-        console.log(ingredients)
+        res.json(Ingredients)
 
       })
-      res.json(ingredients)
-    }
+
+      .catch(error => console.error(error));
+    },
+
 
 }
+
+// const IngredientsQuery = req.params.recipe_id
+// const url = `http://food2fork.com/view/${IngredientsQuery}`
+// console.log(url)
+// return axios.get(url)
+// .then((response) =>{
+//   let $ = cheerio.load(response.data);
+//   let Ingredients = {
+//     ingredients:[]
+//   };
+//   $(".span5.offset1.about-container li").each(function(i, element){
+//     let ingredient = $(element).text();
+//     Ingredients.push(ingredient)
+//   })
+//   response.data = Ingredients
+//
+// })
+// .then(response => res.json(response.data))
+// .catch(error => console.error(error));
+
+/////
 
 // function Food2forkIngredients(req, res){
 //   const IngredientsQuery = "http://food2fork.com/view/" + "47998"
