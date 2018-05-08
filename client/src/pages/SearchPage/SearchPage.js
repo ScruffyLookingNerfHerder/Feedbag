@@ -23,18 +23,19 @@ class SearchPage extends Component {
     console.log(this.props.user);
       axios.get('/api/Restaurants/' + this.props.user.id)
         .then(res => {
-          console.log(res.data);
+
         })
         .catch(err => {
           console.log(err);
         });
 
-    axios.get('/api/Ingredients/35119')
+
+    axios.get('/api/Steps/All%20Recipes/?url=http://allrecipes.com/Recipe/Baked-Buffalo-Wings/Detail.aspx')
       .then(res => {
         console.log(res.data);
       }).catch(err => {
-        console.log(err);
-      })
+        console.log(err)
+      });
   }
 
 
@@ -89,7 +90,7 @@ state = {
 
     API.getVenue(id)
     .then(res => {
-      console.log(res.data.response.venue)
+
       this.setState({ singleVen: res.data.response.venue })
     })
     .catch(err => console.log(err));
@@ -99,11 +100,11 @@ state = {
 
     API.getRec(this.state.restSearch)
     .then(res => {
-      console.log(res)
+
 
       const canscrape =["All Recipes","Closet Cooking", "101 Cookbooks", "BBC Good Food", "The Pioneer Woman", "Bon Appetit", "Jamie Oliver", "BBC Food", "Epicurious", "Tasty Kitchen", "Cookstr", "Simply Recipes"]
       const filteredrecs = res.data.recipes.filter(recipe => canscrape.includes(recipe.publisher))
-      console.log(filteredrecs)
+
       this.setState({ recipes: filteredrecs })
     })
     .catch(err => console.log(err));
@@ -158,17 +159,29 @@ state = {
 
   renderRecCard = () => {
     let f2fingredients
+
     let renderRestCard = this.state.recipes.map(recipe => (
 
     axios.get('/api/Ingredients/' + recipe.recipe_id)
     .then(res =>{
       recipe.ingredients = res.data.ingredients
-
       console.log(recipe)
     })
+
     .catch(err =>{
       console.log(err)
     }),
+
+    axios.get("/api/Steps/"+ recipe.publisher +"/?url=" + recipe.source_url)
+    .then(res => {
+      console.log(res.data)
+      recipe.instructions = res.data.instructions
+      console.log(recipe)
+    })
+    .catch(err => {
+      console.log(err)
+    }),
+
       <RecResultButton
         key={recipe.title}
         id={recipe.title}

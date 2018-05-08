@@ -111,7 +111,9 @@ router.route('/auth')
 
       router.route('/Ingredients/:recipeid')
         .get(mustBeLoggedIn(), recipeapi.Food2forkIngredients)
-      
+
+      router.route('/Steps/:publisher/')
+        .get(mustBeLoggedIn(), recipeapi.RecipeInstrux)
 
 
 

@@ -9,7 +9,7 @@ const bodyparser = require('body-parser');
 app.use(morgan('dev'));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
-
+app.disable('etag');
 
 require('dotenv').config();
 
