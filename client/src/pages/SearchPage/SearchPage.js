@@ -11,8 +11,15 @@ import RecResultButton from "../../components/RecResultButton";
 import { Link } from 'react-router-dom';
 import { withUser } from '../../services/withUser';
 import axios from "axios";
+import 'rc-checkbox/assets/index.css';
+import Checkbox from "rc-checkbox";
+import searchOps from "./searchOps.json";
 
 class SearchPage extends Component {
+
+  constructor(props) {
+    super(props);
+  }
 
   componentDidMount() {
     // only try loading stuff if the user is logged in.
@@ -27,93 +34,145 @@ class SearchPage extends Component {
         .catch(err => {
           console.log(err);
         });
-      axios.get('/api/RecipeEXP/' + "schnitzel")
-        .then(res => {
-          console.log(res.data);
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      // axios.get('/api/RecipeEXP/' + "schnitzel")
+      //   .then(res => {
+      //     console.log(res.data);
+      //   })
+      //   .catch(err => {
+      //     console.log(err)
+      //   })
   }
 
 state = {
   venues: [],
   recipes: [],
+  searchOps,
   singleVen: undefined,
+  showRestInfo: true,
   loSearch: "arlington va",
-  restSearch: "burger",
-  showRestInfo: true
+  // resRecSearch: null,
+  restSearch: [],
+  recSearch: [],
+  restResultsFound: 0,
+  recResultsFound: 0
+}
+// =====================================
+
+onChange = e => {
+  console.log('Checkbox :',(e.target));
 }
 
- handleInputChange = event => {
-   const { name, value } = event.target;
-   this.setState({
-     [name]: value
-   });
- };
+conCat = (array) => {
+  return array.join(',');
+}
 
- handleTru = event => {
+handleInputChange = event => {
+  const { name, value } = event.target;
+  this.setState({
+    [name]: value
+  });
+};
+
+handleCuisineSel = event => {
+
+  const eValue = event.target.value;
+  const eId = event.target.id;
+
+  let restSearchArr = this.state.restSearch;
+  let recSearchArr = this.state.recSearch;
+  let removeRestSearchTerm = restSearchArr.filter(restSearchTerm => restSearchTerm !== eValue);
+  let removeRecSearchTerm = recSearchArr.filter(recSearchTerm => recSearchTerm != eId);
+
+    if (event.target.checked === true) {
+      console.log("set to true")
+        restSearchArr.push(eValue);
+        recSearchArr.push(eId);
+          this.setState({ restSearch: restSearchArr })
+          this.setState({ recSearch: recSearchArr })
+          console.log(this.state.restSearch)
+
+    } else {
+        console.log("set to false")
+          this.setState({ restSearch: removeRestSearchTerm })
+          this.setState({ recSearch: removeRecSearchTerm })
+    }
+}
+
+ handleTruVenRecCard = event => {
    if (this.state.showRestInfo === true) {
      this.setState({ showRestInfo: false })
    }
-
-  else if (this.state.showRestInfo === false && this.state.singleVen !== undefined) {
+   else if (this.state.showRestInfo === false && this.state.singleVen !== undefined) {
     this.setState({ showRestInfo: false })
   }
- }
+}
 
+  handleNoResults = event => {
+
+
+
+  }
 // ===================
 
-  loadRest = event => {
+  submitRecAndRestApi = event => {
 
-    event.preventDefault();
+    let joinedRestS = this.conCat(this.state.restSearch);
+      // this.setState({ resRecSearch: joinedRestS})
+      // console.log(joinedRestS)
+      event.preventDefault();
 
-      API.getRest(this.state.loSearch, this.state.restSearch)
-      .then(res => {
-        this.setState({ venues: res.data.response.venues })
-      })
-      .catch(err => console.log(err));
+        API.getRest(this.state.loSearch, joinedRestS)
+        .then(res => {
+          this.setState({ venues: res.data.response.venues })
+          this.setState({ restResultsFound: this.state.venues.length })
+          console.log(this.state.restResultsFound)
+        })
+        .catch(err => console.log(err));
 
-        this.setState({ singleVen: undefined })
-        this.loadRecipe();
+      // if (this.state.restResultsFound == 0) {
+      //   this.setState({ restResultsFound: "0 venues found!"})
+      // }
+      this.setState({ singleVen: undefined })
+      this.loadRecipes();
+      joinedRestS = "";
   }
 
-  loadVen = event => {
-    let id = event.currentTarget.id;
+  loadRecipes = () => {
 
+    let joinedRecS= this.conCat(this.state.recSearch)
+
+    API.getRec(joinedRecS)
+    .then(res => {
+      console.log(res.data.recipes)
+      this.setState({ recipes: res.data.recipes })
+      this.setState({ recResultsFound: this.state.recipes.length })
+    })
+    .catch(err => console.log(err));
+
+    joinedRecS = "";
+  }
+
+  loadSingleVenue = event => {
+    let id = event.currentTarget.id;
       event.persist();
         event.preventDefault();
-          this.handleTru();
-
+          this.handleTruVenRecCard();
     API.getVenue(id)
     .then(res => {
-      console.log(res.data.response.venue)
       this.setState({ singleVen: res.data.response.venue })
     })
     .catch(err => console.log(err));
   }
 
-  loadRecipe = event => {
-
-    API.getRec(this.state.restSearch)
-    .then(res => {
-      console.log(res)
-      console.log("above")
-      this.setState({ recipes: res.data.recipes })
-    })
-    .catch(err => console.log(err));
-    console.log(this.state.recipes)
-  }
 // =======================
   renderRestCard = () => {
-
     let renderRestCard = this.state.venues.map(restaurant => (
       <ResultButton
       key={restaurant.id}
       id={restaurant.id}
       clicked={this.showRestInfo}
-      clickVenueBtn={this.loadVen}
-      clickHandleTru={this.handleTru}
+      clickVenueBtn={this.loadSingleVenue}
+      clickHandleTru={this.handleTruVenRecCard}
       >
       {RestCard(restaurant)}
       </ResultButton>
@@ -122,37 +181,52 @@ state = {
   }
 
   renderVenCard = () => {
-
     if (this.state.singleVen !== undefined) {
-      let imgPre = "https://igx.4sqi.net/img/general/width960"
-      let imgSuf = this.state.singleVen.photos.groups[0].items[0].suffix;
-      console.log(imgPre + imgSuf)
+
       let singleVenObj = this.state.singleVen;
-        let renderVenObj = {
-              key: singleVenObj.id,
-              id: singleVenObj.id,
-              name: singleVenObj.name,
-              hours: singleVenObj.hours,
-              location: singleVenObj.location,
-              phone: singleVenObj.contact,
-              url: singleVenObj.url,
-              img: imgPre + imgSuf
+      let renderVenObj;
+
+      if ( this.state.singleVen.photos.groups[0] !== undefined) {
+        let imgPre = "https://igx.4sqi.net/img/general/width960"
+        let imgSuf = this.state.singleVen.photos.groups[0].items[0].suffix;
+          renderVenObj = {
+            key: singleVenObj.id,
+            id: singleVenObj.id,
+            name: singleVenObj.name,
+            price: singleVenObj.price,
+            hours: singleVenObj.hours,
+            location: singleVenObj.location,
+            phone: singleVenObj.contact,
+            url: singleVenObj.url,
+            img: imgPre + imgSuf
+          }
+        } else {
+          renderVenObj = {
+            key: singleVenObj.id,
+            id: singleVenObj.id,
+            name: singleVenObj.name,
+            price: singleVenObj.price,
+            hours: singleVenObj.hours,
+            location: singleVenObj.location,
+            phone: singleVenObj.contact,
+            url: singleVenObj.url,
         }
-            return (
-                <VenResultButton
-                key={renderVenObj.id}
-                id={renderVenObj.id}
-                clicked={this.showRestInfo}
-                clickHandleTru={this.handleTru}
-                >
-                {VenCard(renderVenObj)}
-                </VenResultButton>
-              )
+      }
+      return (
+        <VenResultButton
+          key={renderVenObj.id}
+          id={renderVenObj.id}
+          clicked={this.showRestInfo}
+          clickHandleTru={this.handleTruVenRecCard}
+          >
+          {VenCard(renderVenObj)}
+        </VenResultButton>
+      )
     }
   }
 
-  renderRecCard = () => {
 
+  renderRecCards = () => {
     let renderRestCard = this.state.recipes.map(recipe => (
       <RecResultButton
         key={recipe.title}
@@ -165,73 +239,93 @@ state = {
     return renderRestCard;
   }
 
+  renderCuisOp = () => {
+    let renderSurvey = this.state.searchOps.map(checkbox => (
+      <button>
+        <Checkbox
+          key={checkbox.id}
+          id={checkbox.id}
+          name="cuisineType"
+          value={checkbox.value}
+          onChange={this.onChange}
+          onClick={this.handleCuisineSel}
+        >
+        </Checkbox>
+        <p>{checkbox.id}</p>
+      </button>
+    ))
+    return renderSurvey;
+  }
+
+  // renderPriceOp = () => {
+  //
+  //
+  // }
+
   // =====================
 
   render () {
-
-  if (this.state.showRestInfo === true) {
-    return (
-  <Wrapper>
-
-    <p> hello world </p>
-    <p> <Link to="/"> Click Here </Link> to go back to the home page! </p>
-    <input
-      name="loSearch"
-      value={this.state.loSearch}
-      onChange={this.handleInputChange}
-      placeholder="Location Search"
-      />
-    <input
-      name="restSearch"
-      value={this.state.restSearch}
-      onChange={this.handleInputChange}
-      placeholder="Restaurant Search"
-      />
-    <button
-      onClick={this.loadRest}
-      type="success"
-      >
-      Search
-    </button>
-
-        { this.renderRestCard() }
-        { this.renderRecCard() }
-
-    </Wrapper>
-    )
-  }
-  else {
-
-    return (
-      <Wrapper>
-
-        <p> hello world </p>
-        <input
-          name="loSearch"
-          value={this.state.loSearch}
-          onChange={this.handleInputChange}
-          placeholder="Location Search"
-          />
-        <input
-          name="restSearch"
-          value={this.state.restSearch}
-          onChange={this.handleInputChange}
-          placeholder="Restaurant Search"
-          />
-        <button
-          onClick={this.loadRest}
-          type="success"
-          >
-          Search
-        </button>
-
-            { this.renderRestCard() }
-            { this.renderRecCard() }
-            { this.renderVenCard() }
-
-      </Wrapper>
-    )
-  }
+    if (this.state.showRestInfo === true) {
+      return (
+        <Wrapper>
+          <p> <Link to="/"> Click Here </Link> to go back to the home page! </p>
+          <p> Enter your location! </p>
+          <input
+            name="loSearch"
+            value={this.state.loSearch}
+            onChange={this.handleInputChange}
+            placeholder="Location Search"
+            />
+          <button
+            onClick={this.submitRecAndRestApi}
+            type="success"
+            >
+            Search
+          </button>
+            <div>
+              <p>Number of Venues Found: { this.state.restResultsFound } </p>
+              <p>Number of Recipes Found: { this.state.recResultsFound } </p>
+            </div>
+              <p>
+                Pick your cuisine! Choose multiple tags to get even more specific results!
+              </p>
+              { this.renderCuisOp() }
+              { this.renderRestCard() }
+              { this.renderRecCards() }
+          </Wrapper>
+          )
+        }
+      else {
+        return (
+          <Wrapper>
+            <p> <Link to="/"> Click Here </Link> to go back to the home page! </p>
+            <p> Enter your location! </p>
+            <input
+              name="loSearch"
+              value={this.state.loSearch}
+              onChange={this.handleInputChange}
+              placeholder="Location Search"
+              />
+            <button
+              onClick={this.submitRecAndRestApi}
+              type="success"
+              >
+              Search
+            </button>
+            <div>
+              <p>Number of Venues Found: { this.state.restResultsFound } </p>
+              <p>Number of Recipes Found: { this.state.recResultsFound } </p>
+            </div>
+              <p>
+                Pick your cuisine! Choose multiple tags to get even more specific results!
+              </p>
+                { this.renderCuisOp() }
+                { this.renderRestCard() }
+                { this.renderRecCards() }
+                { this.renderVenCard() }
+        </Wrapper>
+      )
+    }
   }
 }
 

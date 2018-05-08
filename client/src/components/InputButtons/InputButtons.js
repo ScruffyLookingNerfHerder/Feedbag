@@ -14,7 +14,7 @@ const InputButtons = props => (
         <input type="radio" name="restSearch" value="Japanese "/>
         <input type="radio" name="restSearch" value="Thai "/>
         <input type="radio" name="restSearch" value="Mexican "/>
-        <input type="radio" name="restSearch" value="Russian "/>                                       
+        <input type="radio" name="restSearch" value="Russian "/>
       </form
     </div>
 
