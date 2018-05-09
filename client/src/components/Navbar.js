@@ -3,6 +3,8 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import AppBar from 'material-ui/AppBar';
 
+
+
 import LoginButton from './LoginButton';
 import LoginMenu from './LoginMenu';
 
@@ -29,7 +31,7 @@ const Navbar = (props) => {
   }
   return (
     <AppBar
-      title="PassportJS Example"
+      title="Feedbag"
       showMenuIconButton={false}
       iconElementRight={user ?
         <LoginMenu user={user} onLogOut={handleLogOut} />
