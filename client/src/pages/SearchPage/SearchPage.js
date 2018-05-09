@@ -11,7 +11,8 @@ import RecResultButton from "../../components/RecResultButton";
 import { Link } from 'react-router-dom';
 import { withUser } from '../../services/withUser';
 import axios from "axios";
-import scraper from '../../utils/scraper'
+import SiteNav from "../../components/SiteNav"
+import "../../App.css"
 
 class SearchPage extends Component {
 
@@ -201,7 +202,7 @@ state = {
   if (this.state.showRestInfo === true) {
     return (
   <Wrapper>
-
+    <SiteNav />
     <p> hello world </p>
     <p> <Link to="/"> Click Here </Link> to go back to the home page! </p>
     <input
@@ -233,7 +234,7 @@ state = {
 
     return (
       <Wrapper>
-
+        <SiteNav />
         <p> hello world </p>
         <input
           name="loSearch"

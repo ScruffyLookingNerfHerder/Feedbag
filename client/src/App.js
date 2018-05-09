@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
+import "./App.css"
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 
