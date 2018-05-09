@@ -109,6 +109,11 @@ router.route('/auth')
       router.route('/RecipeEXP/:recipekeywords')
         .get(mustBeLoggedIn(), recipeapi.Food2forkapi)
 
+      router.route('/Ingredients/:recipeid')
+        .get(mustBeLoggedIn(), recipeapi.Food2forkIngredients)
+
+      router.route('/Steps/:publisher/')
+        .get(mustBeLoggedIn(), recipeapi.RecipeInstrux)
 
 
 

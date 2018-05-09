@@ -39,7 +39,7 @@ class LoginPage extends Component {
     .then(user => {
       // if the response is successful, update the current user and redirect to the home page
       update(user.data);
-      history.push('/');
+      history.push('/user');
     })
     .catch(err => {
       // an error occured, so let's record the error in our state so we can display it in render
