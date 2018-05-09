@@ -18,6 +18,8 @@ import TestTwitterPage from './pages/TestTwitterPage';
 import MembersOnlyPage from './pages/MembersOnlyPage';
 import SearchPage from './pages/SearchPage';
 import UserPage from './pages/Userpage';
+import RecipePage from './pages/RecipePage';
+import RestaurantsPage from './pages/RestaurantsPage';
 
 class App extends Component {
   componentDidMount() {
@@ -55,7 +57,9 @@ class App extends Component {
               <Route exact path="/testtwitter" component={TestTwitterPage} />
               <ProtectedRoute exact path="/membersonly" component={MembersOnlyPage} />
               <ProtectedRoute exact path="/search" component={SearchPage} />
-              <ProtectedRoute exact path="/user" component={UserPage} />
+              <ProtectedRoute exact path="/recipes" component={RecipePage} />
+              <ProtectedRoute exact path="/restaurants" component={RestaurantsPage} />
+
               <Route component={NotFoundPage} />
             </Switch>
           </Fragment>

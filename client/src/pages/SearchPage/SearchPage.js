@@ -1,6 +1,6 @@
 // import "../../App.css";
 import React, { Component } from "react";
-import API from "../../API"
+import API from "../../utils/API";
 import Wrapper from "../../components/Wrapper";
 import RestCard from "../../components/RestCard";
 import VenCard from "../../components/VenCard";
