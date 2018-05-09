@@ -7,6 +7,9 @@ name: String,
 websiteURL: String,
 address: String,
 photos: String,
+location: String,
+hours: String,
+phone:String,
 User:{
   type: Schema.Types.ObjectId, ref: "users"
 }

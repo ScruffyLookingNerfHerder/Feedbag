@@ -1,0 +1,29 @@
+KEY = '15a372b846b971348dc85396f31c7b40'
+
+# WARNING: DO NOT COMMIT YOUR .env FILE!!! This file is only used for development!
+# I'm only including it here so you can see what you need to configure.
+# Committing a .env file is bad because you might accidentally expose your
+# API keys and secrets to the public if they browse your repo
+# YOU HAVE BEEN WARNED!
+
+# Necessary config values for Spotify Integration
+SPOTIFY_CLIENT_ID=your-client-id-here
+SPOTIFY_CLIENT_SECRET=your-client-secret-here
+
+# necessary config values for Twitter integration
+TWITTER_CONSUMER_KEY= "N0uL1hdYHHzbjkvjKqbVX3kyr"
+TWITTER_CONSUMER_SECRET= "fxZHLZenQQ11Uo2M3dfbj6d3giep0IDwFdlKEJuOIs6GJ7PoV"
+
+#necessary config values for Google integration
+GOOGLE_CLIENT_ID= "210638088912-bch7pvvsfpjb184jl04df6cdfje67gur.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET= "VV2rpJcl7gtDFNnBkcj9c5pR"
+
+#necessary config value for Food2Fork API
+FOOD_T0_FORK_API="15a372b846b971348dc85396f31c7b40"
+
+# necessary config values for Facebook integration
+FACEBOOK_CLIENTID = "218987942202868"
+FACEBOOK_CLIENTSECRET = "113dd4ec36345d76769bd908432fc363"
+# You'll need to change this to match the URL of your published site on Heroku
+# e.g. https://my-app.herokuapp.com
+APP_BASE_URL=http://localhost:3001
