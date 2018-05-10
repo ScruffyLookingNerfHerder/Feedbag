@@ -30,6 +30,12 @@ class SearchPage extends Component {
           console.log(err);
         });
 
+      axios.get('/api/RecipeEXP/onions')
+      .then(res => {
+        console.log(res.data)
+      }).catch(err => {
+        console.log(err)
+      })
 
     axios.get('/api/Steps/All%20Recipes/?url=http://allrecipes.com/Recipe/Baked-Buffalo-Wings/Detail.aspx')
       .then(res => {

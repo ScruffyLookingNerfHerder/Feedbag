@@ -1,4 +1,5 @@
 const FOOD2FORK = 'https://food2fork.com/api/search?key='
+const RECIPEPUPPY = 'http://www.recipepuppy.com/api/?q='
 const APIKey = process.env.FOOD_T0_FORK_API;
 const axios = require('axios');
 const request = require('request')
@@ -9,11 +10,18 @@ module.exports = {
 
       const RecipeQuery = req.params.recipekeywords;
       const url = `${FOOD2FORK}${APIKey}&q=${RecipeQuery}&count=3`;
-
+      const url2 = `${RECIPEPUPPY}${RecipeQuery}&oi=1`
+      console.log(url2)
       return axios.get(url)
       .then(response => res.json(response.data))
         console.log(response.data)
-      .catch(error => console.error(error));
+      .catch(error => {
+        axios.get(url2)
+        .then(response => res.json(response.data))
+        .catch(error => {
+          console.log(error)
+        })
+      });
     },
 
     Food2forkIngredients: function(req, res){
