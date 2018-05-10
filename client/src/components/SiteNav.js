@@ -6,7 +6,7 @@ const SiteNav = () => (
   <Navbar inverse collapseOnSelect>
   <Navbar.Header>
     <Navbar.Brand>
-      <a href="/search">Search</a>
+      <a href="/search">Feedbag Search!</a>
     </Navbar.Brand>
     <Navbar.Toggle />
   </Navbar.Header>
@@ -15,12 +15,18 @@ const SiteNav = () => (
       <NavItem eventKey={1} href="#">
         Grocery List
       </NavItem>
-      <NavItem eventKey={1} href="#">
-        Notes
-      </NavItem>
     <NavItem eventKey={1} href="/user">
         Userpage
       </NavItem>
+    <NavItem eventKey={1} href="/recipes">
+        Your Recipes
+    </NavItem>
+    <NavItem eventKey={1} href="/restaurants">
+        Your Restaurants
+    </NavItem>
+    <NavItem eventKey={1} href="/groceries">
+        Your Groceries
+    </NavItem>
 
 
     </Nav>
