@@ -63,3 +63,4 @@ keys.js
 .env
 
 node_modules
+yarn.lock

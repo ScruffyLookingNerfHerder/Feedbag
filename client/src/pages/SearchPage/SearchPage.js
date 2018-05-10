@@ -20,8 +20,9 @@ import axios from "axios";
 import 'rc-checkbox/assets/index.css';
 import Checkbox from "rc-checkbox";
 import searchOps from "./searchOps.json";
-import SiteNav from "../../components/SiteNav"
-import "../../App.css"
+import SiteNav from "../../components/SiteNav";
+import Jumbotron from "../../components/Jumbotron";
+
 
 class SearchPage extends Component {
 
@@ -299,7 +300,7 @@ renderRecCards = () => {
     .catch(err => {
       console.log(err)
     }),
-    
+
     axios.get("/api/Steps/" + recipe.publisher + "/?url=" + recipe.source_url)
     .then(res => {
       console.log(res.data)
@@ -310,53 +311,29 @@ renderRecCards = () => {
       console.log(err)
     }),
     */},
-    <
-    RecResultButton key = {
-      recipe.title
-    }
-    id = {
-      recipe.title
-    }
-    href = {
-      recipe.source_url
-    }
-    ingredients = {
-      recipe.ingredients
-    } >
+    <RecResultButton key = {recipe.title}
+    id = {recipe.title}
+    href = {recipe.source_url}
+    ingredients = {recipe.ingredient} >
     {
       RecipeCard(recipe)
-    } <
-    /RecResultButton>
+    } </RecResultButton>
   ))
   return renderRestCard;
 }
 
 renderCuisOp = () => {
-  let renderSurvey = this.state.searchOps.map(checkbox => ( <
-    button >
-    <
-    Checkbox key = {
-      checkbox.id
-    }
-    id = {
-      checkbox.id
-    }
+  let renderSurvey = this.state.searchOps.map(checkbox => (
+    <button >
+    <Checkbox key = {checkbox.id}
+    id = {checkbox.id}
     name = "cuisineType"
-    value = {
-      checkbox.value
-    }
-    onChange = {
-      this.onChange
-    }
-    onClick = {
-      this.handleCuisineSel
-    } >
-    <
-    /Checkbox> <
-    p > {
-      checkbox.id
-    } < /p> <
-    /button>
+    value = {checkbox.value}
+    onChange = {this.onChange}
+    onClick = {this.handleCuisineSel} >
+    </Checkbox>
+    <p> {checkbox.id} </p>
+      </button>
   ))
   return renderSurvey;
 }
@@ -372,94 +349,54 @@ render() {
   if (this.state.showRestInfo === true) {
     return ( <
       Wrapper >
+      <div className="container">
+      <Jumbotron />
       <SiteNav />
-      <
-      p > < Link to = "/" > Click Here < /Link> to go back to the home page! </p >
-      <
-      p > Enter your location! < /p> <
-      input name = "loSearch"
-      value = {
-        this.state.loSearch
-      }
-      onChange = {
-        this.handleInputChange
-      }
-      placeholder = "Location Search" /
-      >
-      <
-      button onClick = {
-        this.submitRecAndRestApi
-      }
-      type = "success" >
-      Search <
-      /button> <
-      div >
-      <
-      p > Number of Venues Found: {
-        this.state.restResultsFound
-      } < /p> <
-      p > Number of Recipes Found: {
-        this.state.recResultsFound
-      } < /p> <
-      /div> <
-      p >
-      Pick your cuisine!Choose multiple tags to get even more specific results!
-      <
-      /p> {
-        this.renderCuisOp()
-      } {
-        this.renderRestCard()
-      } {
-        this.renderRecCards()
-      } <
-      /Wrapper>
+      </div>
+
+      <p> <Link to = "/" > Click Here </Link> to go back to the home page! </p>
+      <p > Enter your location! </p>
+        <input name = "loSearch" value = {this.state.loSearch} onChange = {this.handleInputChange} placeholder = "Location Search" />
+
+    <button onClick = {this.submitRecAndRestApi} type = "success" > Search </button>
+
+    <div >
+      <p> Number of Venues Found: {this.state.restResultsFound}</p>
+      <p > Number of Recipes Found: {this.state.recResultsFound} </p>
+      </div>
+      <p> Pick your cuisine! Choose multiple tags to get even more specific results!</p>
+      {this.renderCuisOp()}
+      {this.renderRestCard()}
+      {this.renderRecCards()}
+
+      </Wrapper>
     )
   } else {
-    return ( <
-      Wrapper >
+    return (
+      <Wrapper >
+
+      <div className="container">
+      <Jumbotron />
       <SiteNav />
-      <
-      p > < Link to = "/" > Click Here < /Link> to go back to the home page! </p >
-      <
-      p > Enter your location! < /p> <
-      input name = "loSearch"
-      value = {
-        this.state.loSearch
-      }
-      onChange = {
-        this.handleInputChange
-      }
-      placeholder = "Location Search" /
-      >
-      <
-      button onClick = {
-        this.submitRecAndRestApi
-      }
-      type = "success" >
-      Search <
-      /button> <
-      div >
-      <
-      p > Number of Venues Found: {
-        this.state.restResultsFound
-      } < /p> <
-      p > Number of Recipes Found: {
-        this.state.recResultsFound
-      } < /p> <
-      /div> <
-      p >
-      Pick your cuisine!Choose multiple tags to get even more specific results!
-      <
-      /p> {
-        this.renderCuisOp()
-      } {
-        this.renderRestCard()
-      } {
-        this.renderRecCards()
-      } {
-        this.renderVenCard()
-      } <
-      /Wrapper>
+      </div>
+
+      <p> <Link to = "/" > Click Here < /Link> to go back to the home page! </p >
+      <p > Enter your location! </p>
+      <input name = "loSearch" value = {this.state.loSearch} onChange = {this.handleInputChange} placeholder = "Location Search" />
+      <button onClick = {this.submitRecAndRestApi} type = "success" > Search </button>
+
+    <div >
+      <p> Number of Venues Found: {this.state.restResultsFound} </p>
+      <p > Number of Recipes Found: {this.state.recResultsFound} </p>
+    </div>
+
+      <p> Pick your cuisine!Choose multiple tags to get even more specific results! </p>
+        {this.renderCuisOp()}
+        {this.renderRestCard()}
+        {this.renderRecCards()}
+        {this.renderVenCard()}
+
+    </Wrapper>
     )
   }
 }
