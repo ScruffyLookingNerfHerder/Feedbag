@@ -43,13 +43,13 @@ class SearchPage extends Component {
       .catch(err => {
         console.log(err);
       });
-    // axios.get('/api/RecipeEXP/' + "schnitzel")
-    //   .then(res => {
-    //     console.log(res.data);
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
+    axios.get('/api/RecipeEXP/' + "schnitzel")
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
 
@@ -211,25 +211,13 @@ class SearchPage extends Component {
 // =======================
 renderRestCard = () => {
   let renderRestCard = this.state.venues.map(restaurant => ( <
-    ResultButton key = {
-      restaurant.id
-    }
-    id = {
-      restaurant.id
-    }
-    clicked = {
-      this.showRestInfo
-    }
-    clickVenueBtn = {
-      this.loadSingleVenue
-    }
-    clickHandleTru = {
-      this.handleTruVenRecCard
-    } >
-    {
-      RestCard(restaurant)
-    } <
-    /ResultButton>
+    ResultButton key = {restaurant.id}
+    id = {restaurant.id}
+    clicked = {this.showRestInfo}
+    clickVenueBtn = {this.loadSingleVenue}
+    clickHandleTru = {this.handleTruVenRecCard}>
+    {RestCard(restaurant)}
+    </ResultButton>
   ))
   return renderRestCard;
 }

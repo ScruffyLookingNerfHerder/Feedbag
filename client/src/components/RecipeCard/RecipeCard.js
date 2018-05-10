@@ -1,8 +1,8 @@
 import React from "react";
-import scraper from '../../utils/scraper'
+
 
 const RecipeCard = props => (
-  
+
 
   <div className="card">
     <div className="img-container">
