@@ -56,6 +56,7 @@ class SearchPage extends Component {
   state = {
     venues: [],
     recipes: [],
+    isCuisineSelected: null,
     searchOps,
     singleVen: undefined,
     showRestInfo: true,
@@ -134,41 +135,55 @@ class SearchPage extends Component {
       })
     }
   }
-
-  handleNoResults = event => {
-
-
-
-  }
+  //
+  // handleNoResults = event => {
+  //
+  //
+  //
+  // }
   // ===================
 
   submitRecAndRestApi = event => {
 
-    let joinedRestS = this.restConCat(this.state.restSearch);
-    // this.setState({ resRecSearch: joinedRestS})
-    // console.log(joinedRestS)
-    event.preventDefault();
+    let restSearch = this.state.restSearch;
+    let loSearch = this.state.loSearch;
 
-    API.getRest(this.state.loSearch, joinedRestS)
-      .then(res => {
-        this.setState({
-          venues: res.data.response.venues
+    if (loSearch === undefined || null) {
+      this.setState({ loSearch: "Enter a Location!" })
+    }
+
+    if (restSearch.length === 0) {
+      this.setState({ isCuisineSelected: "Select a Cuisine!"})
+    }
+
+    else if (restSearch.length > 0) {
+      let joinedRestS = this.restConCat(this.state.restSearch);
+      // this.setState({ resRecSearch: joinedRestS})
+      // console.log(joinedRestS)
+      event.preventDefault();
+
+      API.getRest(this.state.loSearch, joinedRestS)
+        .then(res => {
+          this.setState({
+            venues: res.data.response.venues
+          })
+          this.setState({
+            restResultsFound: this.state.venues.length
+          })
+          console.log(this.state.restResultsFound)
         })
-        this.setState({
-          restResultsFound: this.state.venues.length
-        })
-        console.log(this.state.restResultsFound)
+        .catch(err => console.log(err));
+
+      // if (this.state.restResultsFound == 0) {
+      //   this.setState({ restResultsFound: "0 venues found!"})
+      // }
+      this.setState({ isCuisineSelected: null })
+      this.setState({
+        singleVen: undefined
       })
-      .catch(err => console.log(err));
-
-    // if (this.state.restResultsFound == 0) {
-    //   this.setState({ restResultsFound: "0 venues found!"})
-    // }
-    this.setState({
-      singleVen: undefined
-    })
-    this.loadRecipes();
-    joinedRestS = "";
+      this.loadRecipes();
+      joinedRestS = "";
+    }
   }
 
   loadRecipes = () => {
@@ -338,11 +353,6 @@ renderCuisOp = () => {
   return renderSurvey;
 }
 
-// renderPriceOp = () => {
-//
-//
-// }
-
 // =====================
 
 render() {
@@ -365,6 +375,7 @@ render() {
       <p > Number of Recipes Found: {this.state.recResultsFound} </p>
       </div>
       <p> Pick your cuisine! Choose multiple tags to get even more specific results!</p>
+      <p>{this.state.isCuisineSelected}</p>
       {this.renderCuisOp()}
       {this.renderRestCard()}
       {this.renderRecCards()}
@@ -391,6 +402,7 @@ render() {
     </div>
 
       <p> Pick your cuisine!Choose multiple tags to get even more specific results! </p>
+      <p>{this.state.isCuisineSelected}</p>
         {this.renderCuisOp()}
         {this.renderRestCard()}
         {this.renderRecCards()}
