@@ -34,9 +34,9 @@ class Groceries extends Component {
       .catch(err => console.log(err));
   };
 
-  deleteGrocery = id => {
-    API.deleteGrocery(id)
-      .then(res => this.loadbooks(this.props.user.id))
+  deleteGroceries = (userid, id) => {
+    API.deleteGroceries(userid, id)
+      .then(res => this.loadGroceries(this.props.user.id))
       .catch(err => console.log(err));
   }
 
@@ -107,12 +107,12 @@ class Groceries extends Component {
                 {this.state.groceries.map(groceries => {
                   return (
                   <ListItem key={groceries._id}>
-                    <a href={"/groceries/" + groceries._id}>
+                    <a href={"/Grocery/" + groceries._id}>
                       <strong>
                         {groceries.title} by {groceries.author}
                       </strong>
                     </a>
-                    <DeleteBtn onClick={() => this.deleteGrocery(groceries._id)}/>
+                    <DeleteBtn onClick={() => this.deleteGroceries(this.props.user.id, groceries._id)}/>
                   </ListItem>
                 );
               })}
