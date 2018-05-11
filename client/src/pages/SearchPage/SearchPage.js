@@ -7,6 +7,7 @@ import VenCard from "../../components/VenCard";
 import ResultButton from "../../components/ResultButton";
 import VenResultButton from "../../components/VenResultButton";
 import RecipeCard from "../../components/RecipeCard";
+import FavoriteButton from "../../components/FavoriteButton";
 import RecResultButton from "../../components/RecResultButton";
 import { Link } from 'react-router-dom';
 import { withUser } from '../../services/withUser';
@@ -34,6 +35,7 @@ class SearchPage extends Component {
         .catch(err => {
           console.log(err)
         })
+        // console.log(this.props.saveRestaurant);
   }
 
 state = {
@@ -89,7 +91,9 @@ state = {
     .then(res => {
       console.log(res.data.response.venue)
       this.setState({ singleVen: res.data.response.venue })
+      isSaved: false
     })
+
     .catch(err => console.log(err));
   }
 
@@ -103,7 +107,26 @@ state = {
     })
     .catch(err => console.log(err));
     console.log(this.state.recipes)
+
   }
+  testMethod = () => console.log('testing 123');
+
+  //Saves a restaurant to the database, then reloads restaurants from the db
+   saveRestaurant = id => {
+     // Makes a clone of the current state by using the spread method on this.state
+     const newState = { ...this.state
+     };
+     const venue = newState.venues.filter(venue => venue.id === id);
+     venue[0].isSaved = true;
+     this.setState({
+       newState
+     })
+     API.saveRestaurant(venue[0])
+       .then(res => {
+         this.loadVen()
+       })
+       .catch(err => console.log(err));
+   };
 // =======================
   renderRestCard = () => {
 
@@ -145,6 +168,10 @@ state = {
                 clicked={this.showRestInfo}
                 clickHandleTru={this.handleTru}
                 >
+                console.log(saveRestaurant);
+              <FavoriteButton onClick={() => this.saveRestaurant(renderVenObj.id)} />
+
+              // this.saveRestaurant(renderVenObj.id)
                 {VenCard(renderVenObj)}
                 </VenResultButton>
               )
