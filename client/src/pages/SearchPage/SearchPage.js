@@ -135,12 +135,7 @@ class SearchPage extends Component {
       })
     }
   }
-  //
-  // handleNoResults = event => {
-  //
-  //
-  //
-  // }
+
   // ===================
 
   submitRecAndRestApi = event => {
@@ -164,6 +159,7 @@ class SearchPage extends Component {
 
       API.getRest(this.state.loSearch, joinedRestS)
         .then(res => {
+          console.log(res.data.response.venues)
           this.setState({
             venues: res.data.response.venues
           })
@@ -216,6 +212,7 @@ class SearchPage extends Component {
     this.handleTruVenRecCard();
     API.getVenue(id)
       .then(res => {
+        console.log(res.data.response.venue)
         this.setState({
           singleVen: res.data.response.venue
         })
@@ -225,8 +222,8 @@ class SearchPage extends Component {
 
 // =======================
 renderRestCard = () => {
-  let renderRestCard = this.state.venues.map(restaurant => ( <
-    ResultButton key = {
+  let renderRestCard = this.state.venues.map(restaurant => (
+    <ResultButton key = {
       restaurant.id
     }
     id = {
@@ -243,8 +240,8 @@ renderRestCard = () => {
     } >
     {
       RestCard(restaurant)
-    } <
-    /ResultButton>
+    }
+    < /ResultButton>
   ))
   return renderRestCard;
 }
@@ -267,6 +264,7 @@ renderVenCard = () => {
         location: singleVenObj.location,
         phone: singleVenObj.contact,
         url: singleVenObj.url,
+        type: singleVenObj.categories,
         img: imgPre + imgSuf
       }
     } else {
@@ -279,25 +277,13 @@ renderVenCard = () => {
         location: singleVenObj.location,
         phone: singleVenObj.contact,
         url: singleVenObj.url,
+        type: singleVenObj.categories
       }
     }
-    return ( <
-      VenResultButton key = {
-        renderVenObj.id
-      }
-      id = {
-        renderVenObj.id
-      }
-      clicked = {
-        this.showRestInfo
-      }
-      clickHandleTru = {
-        this.handleTruVenRecCard
-      } >
-      {
-        VenCard(renderVenObj)
-      } <
-      /VenResultButton>
+    return (
+      <div>
+      {VenCard(renderVenObj)}
+      </div>
     )
   }
 }

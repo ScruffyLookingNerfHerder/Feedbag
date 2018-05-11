@@ -17,6 +17,7 @@ const VenCard = props => (
     )}
 
       <p><strong>Name:</strong> { props.name }</p>
+      <p><strong>Type:</strong> { props.type[0].shortName }</p>
 
       { props.price ? (
         <p><strong>Price Tier: </strong>{ props.price.tier }</p>
