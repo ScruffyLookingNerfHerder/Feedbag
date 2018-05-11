@@ -98,9 +98,7 @@ router.route('/auth')
         .put(mustBeLoggedIn(), RecipeController.update)
         .delete(mustBeLoggedIn(), RecipeController.remove)
 
-      // router.route('/Groceries')
-      //   .get(mustBeLoggedIn(), ToDoController.findAll)
-      //   .post(mustBeLoggedIn(), ToDoController.create)
+      
       router.route('/Groceries/:userid/')
         .get(mustBeLoggedIn(), ToDoController.find)
         .put(mustBeLoggedIn(), ToDoController.update)
