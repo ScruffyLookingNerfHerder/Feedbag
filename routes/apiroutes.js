@@ -105,6 +105,10 @@ router.route('/auth')
         .get(mustBeLoggedIn(), ToDoController.find)
         .put(mustBeLoggedIn(), ToDoController.update)
         .delete(mustBeLoggedIn(), ToDoController.update)
+      router.route('/Groceries/:id')
+        .get(mustBeLoggedIn(), ToDoController.find)
+        .put(mustBeLoggedIn(), ToDoController.update)
+        .delete(mustBeLoggedIn(), ToDoController.update)
 
       router.route('/RecipeEXP/:recipekeywords')
         .get(mustBeLoggedIn(), recipeapi.Food2forkapi)
@@ -114,6 +118,7 @@ router.route('/auth')
 
       router.route('/Steps/:publisher/')
         .get(mustBeLoggedIn(), recipeapi.RecipeInstrux)
+
 
 
 

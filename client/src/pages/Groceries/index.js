@@ -1,1 +1,1 @@
-export {default} from "./Groceries.js"
+export { default } from "./Groceries.js";
