@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { update } from '../services/withUser';
 
+import Jumbotron from "../components/Jumbotron";
 let baseUrl = '';
 
 // This is a hack to get around the fact that our backend server
@@ -56,6 +57,12 @@ class LoginPage extends Component {
 
     return (
       <Grid fluid>
+        <div className = "container">
+          <Jumbotron />
+          
+
+        </div>
+
         <Row>
           <Col xs={4} xsOffset={4}>
             <form onSubmit={this.handleLogin}>
