@@ -39,6 +39,8 @@
     "passport-twitter": "^1.0.4",
     "rc-checkbox": "^2.1.5",
     "request": "^2.85.0",
-    "twitter": "^1.7.1"
+    "twitter": "^1.7.1",
+    "react": "^16.0.0",
+    "react-router-dom": "^4.2.2"
   }
 }
