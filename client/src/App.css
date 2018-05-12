@@ -27,6 +27,8 @@ body {
   width: 70%;
 }
 
+
+
 .container .jumbotron {
   border-radius: 50%;
 }
@@ -56,8 +58,21 @@ a.carousel-control.left {
   opacity: 0;
 }
 
+.Carousel a {
+  color: white
+}
+
+.login {
+  background-color: white;
+  margin:auto;
+  padding: 10px;
+  text-align: center;
+  border-style: solid;
+
+}
+
 h3 {
-  font-size: 46px;
+  font-size: 38px;
 }
 
 .App {
@@ -85,15 +100,38 @@ h3 {
 }
 
 .jumbotron {
-  background-color: yellow;
+  width: 400px;
+  padding: 10px;
 }
 
 .panel {
   margin-top: 30px;
 }
 
-p {
-  color: blue;
+.Grocerynote {
+
+}
+
+.Grocerynote p {
+  color: white;
+  margin: auto;
+  background-color: black;
+ border-style: dashed;
+ font-family: 'Pangolin', cursive;
+  padding: 10px;
+ font-size: 28px;
+ text-align: center;
+
+}
+
+.back {
+  margin: auto;
+ color: white;
+ font-size: 28px;
+ text-align: center;
+ height: 80px;
+ width: 40%;
+
 }
 
 @keyframes App-logo-spin {

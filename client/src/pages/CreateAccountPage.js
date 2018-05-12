@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import Jumbotron from "../components/Jumbotron";
 let baseUrl = '';
 
 // This is a hack to get around the fact that our backend server
@@ -66,8 +66,14 @@ class CreateAccountPage extends Component {
 
     return (
       <Grid fluid>
+        <div className = "container">
+          <Jumbotron />
+
+
+        </div>
         <Row>
           <Col xs={4} xsOffset={4}>
+            <div className="login">
             <form onSubmit={this.handleLogin}>
               <h1>Create Account</h1>
               {error &&
@@ -120,6 +126,7 @@ class CreateAccountPage extends Component {
               </div>
               */}
             </form>
+          </div>
           </Col>
         </Row>
       </Grid>

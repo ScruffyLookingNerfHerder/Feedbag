@@ -21,6 +21,7 @@ import UserPage from './pages/Userpage';
 import RecipesPage from './pages/RecipesPage';
 import RestaurantsPage from './pages/RestaurantsPage';
 import GroceriesPage from './pages/Groceries';
+import GroceryPage from './pages/Grocery'
 
 class App extends Component {
   componentDidMount() {
@@ -50,8 +51,8 @@ class App extends Component {
               user={user}
             />
             <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route exact path="/login" component={LoginPage} />
+              
+              <Route exact path="/" component={LoginPage} />
               <Route exact path="/create" component={CreateAccountPage} />
               <Route exact path="/auth/failed" component={AuthFailedPage} />
               <Route exact path="/testspotify" component={TestSpotifyPage} />
@@ -62,6 +63,7 @@ class App extends Component {
               <ProtectedRoute exact path="/recipes" component={RecipesPage} />
               <ProtectedRoute exact path="/restaurants" component={RestaurantsPage} />
               <ProtectedRoute exact path="/groceries" component={GroceriesPage} />
+              <ProtectedRoute exact path="/groceries/:userid/:id" component={GroceryPage} />
               <Route component={NotFoundPage} />
             </Switch>
           </Fragment>

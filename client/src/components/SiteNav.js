@@ -12,18 +12,17 @@ const SiteNav = () => (
   </Navbar.Header>
   <Navbar.Collapse>
     <Nav>
-      <NavItem eventKey={1} href="#">
-        Grocery List
-      </NavItem>
     <NavItem eventKey={1} href="/user">
         Userpage
       </NavItem>
+      {/*
     <NavItem eventKey={1} href="/recipes">
         Your Recipes
     </NavItem>
     <NavItem eventKey={1} href="/restaurants">
         Your Restaurants
     </NavItem>
+    */}
     <NavItem eventKey={1} href="/groceries">
         Your Groceries
     </NavItem>

@@ -13,7 +13,7 @@ import { update } from '../services/withUser';
 const Navbar = (props) => {
   const { user } = props;
   const handleLogIn = () => {
-    props.history.push('/login');
+    props.history.push('/');
   };
   const handleLogOut = () => {
     axios.delete('/api/auth')
@@ -30,7 +30,7 @@ const Navbar = (props) => {
     props.history.push('/');
   }
   return (
-    <AppBar
+    <AppBar className = "Loginbar"
       title="Feedbag"
       showMenuIconButton={false}
       iconElementRight={user ?

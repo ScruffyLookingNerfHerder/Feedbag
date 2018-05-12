@@ -98,13 +98,16 @@ router.route('/auth')
         .put(mustBeLoggedIn(), RecipeController.update)
         .delete(mustBeLoggedIn(), RecipeController.remove)
 
-      router.route('/Groceries')
-        .get(mustBeLoggedIn(), ToDoController.findAll)
-        .post(mustBeLoggedIn(), ToDoController.create)
-      router.route('/Grocerices/:userid')
+      router.route('/Groceries/:userid/')
         .get(mustBeLoggedIn(), ToDoController.find)
         .put(mustBeLoggedIn(), ToDoController.update)
-        .delete(mustBeLoggedIn(), ToDoController.update)
+        .delete(mustBeLoggedIn(), ToDoController.remove)
+        .post(mustBeLoggedIn(), ToDoController.create)
+      router.route('/Groceries/:userid/:id')
+        .get(mustBeLoggedIn(), ToDoController.findById)
+        .post(mustBeLoggedIn(), ToDoController.create)
+        .put(mustBeLoggedIn(), ToDoController.update)
+        .delete(mustBeLoggedIn(), ToDoController.remove)
 
       router.route('/RecipeEXP/:recipekeywords')
         .get(mustBeLoggedIn(), recipeapi.Food2forkapi)
@@ -114,6 +117,7 @@ router.route('/auth')
 
       router.route('/Steps/:publisher/')
         .get(mustBeLoggedIn(), recipeapi.RecipeInstrux)
+
 
 
 
