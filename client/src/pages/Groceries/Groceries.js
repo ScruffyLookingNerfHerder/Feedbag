@@ -8,6 +8,7 @@ import DeleteBtn from "../../components/DeleteBtn";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
+import "../../App.css"
 
 
 class Groceries extends Component {
@@ -69,7 +70,7 @@ class Groceries extends Component {
         <Row>
         <Col size="md-6">
           <Grocerytron>
-            <h1>What Books Should I Read?</h1>
+            <h1>Needed Groceries?</h1>
           </Grocerytron>
           <form>
             <Input
@@ -100,7 +101,7 @@ class Groceries extends Component {
         </Col>
           <Col size="md-6 sm-12">
             <Grocerytron>
-              <h1>Books On My List</h1>
+              <h1>Grocery List</h1>
             </Grocerytron>
             {this.state.groceries.length ? (
               <List>
