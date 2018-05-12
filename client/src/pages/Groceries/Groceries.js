@@ -107,7 +107,7 @@ class Groceries extends Component {
                 {this.state.groceries.map(groceries => {
                   return (
                   <ListItem key={groceries._id}>
-                    <a href={"/Grocery/" + groceries._id}>
+                    <a href={"/Groceries/"+ this.props.user.id + "/" + groceries._id}>
                       <strong>
                         {groceries.title} by {groceries.author}
                       </strong>
