@@ -1,43 +1,10 @@
-# Create React Express App
+# Feedbag
 
-## About This Boilerplate
+## About This App
 
-This setup allows for a Node/Express/React app which can be easily deployed to Heroku.
+Feedbag is a react based food searching app. At present, it searches for recipes and restaurants from 2 different API's and returns them to the user based on search queries, and allows users
+to create and edit a grocery list. In future updates, Feedbag will allow users to favorite a restaurant or a recipe. It will then allow users to edit the recipes to their own specifications, based on
+their experimentation while creating those recipes. Additionally, Feedbag will allow users to make their own private notes on their favorites restaurants, so they can remember their favorite dishes or maybe that they had bad service, without alerting everyone and their mother to this face through an online review should they not want to do that.
 
-The front-end React app will auto-reload as it's updated via webpack dev server, and the backend Express app will auto-reload independently with nodemon.
-
-## Starting the app locally
-
-Start by installing front and backend dependencies. While in this directory, run the following commands:
-
-```
-yarn install
-cd client
-yarn install
-cd ..
-``
-
-After both installations complete, run the following command in your terminal:
-
-```
-yarn start
-```
-
-That's it, your app should be running on <http://localhost:3000>. The Express server should intercept any AJAX requests from the client.
-
-## Deployment (Heroku)
-
-After confirming that you have an up to date git repository and a Heroku app created, complete the following:
-
-1. Build the React app for production by running the following command:
-
-```
-yarn build
-```
-> Note: A yarn build will be required to register any new Post requests from any front-end JavaScript to to prevent any proxy server errors.
-
-2. Add and commit all changes to git
-
-3. Push to Heroku
-
-If all previous steps were followed correctly, your application should be deployed to Heroku!
+## Wireframe:
+![wireframe](https://raw.githubusercontent.com/ScruffyLookingNerfHerder/Feedbag/master/feedbag_mockup.jpg)
