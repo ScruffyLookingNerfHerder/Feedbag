@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import Grocerytron from "../../components/Grocerytron";
 import API from "../../utils/API";
+import SiteNav from "../../components/SiteNav";
+import Jumbotron from "../../components/Jumbotron";
 
 class Detail extends Component {
   state = {
@@ -23,7 +25,13 @@ class Detail extends Component {
   render() {
     const user = this.props.user.id
     return (
+
       <Container fluid>
+        <div className = "container">
+          <Jumbotron />
+          <SiteNav />
+
+        </div>
         <Row>
           <Col size="md-12">
             <Grocerytron>
