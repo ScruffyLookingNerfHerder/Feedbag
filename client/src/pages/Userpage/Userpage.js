@@ -4,7 +4,7 @@ import axios from "axios";
 import AuthFailedPage from "../AuthFailedPage";
 import SiteNav from "../../components/SiteNav";
 import Jumbotron from "../../components/Jumbotron";
-import Panel from "../../components/Panel";
+
 import Circle from "../../components/Carousel"
 
 class Userpage extends Component {
@@ -33,7 +33,7 @@ render() {
         <Jumbotron />
         <SiteNav />
         <Circle />
-        <Panel />
+        
       </div>
     )
   }

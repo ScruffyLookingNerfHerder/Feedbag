@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { withUser } from '../../services/withUser'
 import AuthFailedPage from "../AuthFailedPage"
-import SiteNav from "../../components/SiteNav"
 import Grocerytron from "../../components/Grocerytron";
 import API from "../../utils/API";
 import DeleteBtn from "../../components/DeleteBtn";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
+import SiteNav from "../../components/SiteNav";
+import Jumbotron from "../../components/Jumbotron";
 
 
 class Groceries extends Component {
@@ -64,8 +65,15 @@ class Groceries extends Component {
 
   render() {
     const { user } = this.props.user.id
+
+
     return (
       <Container fluid>
+        <div className = "container">
+          <Jumbotron />
+          <SiteNav />
+
+        </div>
         <Row>
         <Col size="md-6">
           <Grocerytron>
@@ -107,7 +115,7 @@ class Groceries extends Component {
                 {this.state.groceries.map(groceries => {
                   return (
                   <ListItem key={groceries._id}>
-                    <a href={"/Grocery/" + groceries._id}>
+                    <a href={"/Groceries/"+ this.props.user.id + "/" + groceries._id}>
                       <strong>
                         {groceries.title} by {groceries.author}
                       </strong>

@@ -22,7 +22,7 @@ const LoginMenu = (props) => {
       targetOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
     >
-      <MenuItem primaryText={username} />
+      <MenuItem primaryText={username} href="/user" />
       <MenuItem primaryText="Log out" onClick={onLogOut} />
       {
         // show the spotify menu item if their user account is connected to spotify

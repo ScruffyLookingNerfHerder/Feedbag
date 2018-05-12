@@ -7,7 +7,7 @@ export default {
   },
   // Gets the book with the given id
   getGrocery: function(userid, id) {
-    return axios.get("/api/Grocerices/"+ userid +"/" + id);
+    return axios.get("/api/Groceries/"+ userid +"/" + id);
   },
   // Deletes the book with the given id
   deleteGroceries: function(userid, id) {
