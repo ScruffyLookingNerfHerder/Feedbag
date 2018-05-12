@@ -3,15 +3,7 @@
   "version": "1.0.0",
   "description": "Mern Demo",
   "main": "server.js",
-  "engines": {
-    "npm": "5.6.0",
-    "node": "8.11.1"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
     "server": "node server.js",
     "client": "cd client && npm run start",
     "start": "./node_modules/.bin/concurrently \"nodemon server.js\" \"./node_modules/.bin/nodemon\" \"npm run client\"",
@@ -50,5 +42,5 @@
     "twitter": "^1.7.1",
     "react": "^16.0.0",
     "react-router-dom": "^4.2.2"
-  },
+  }
 }
