@@ -2,11 +2,12 @@ import React from "react";
 
 const RestCard = props => (
 
-  <div className="card">
+  <div className="card RestCard">
     <div className="img-container">
     </div>
     <div className="content">
       <p><strong>Name:</strong> {props.name}</p>
+      <p><strong>Type:</strong> {props.categories[0].shortName}</p>
 
       { props.location.address ? (
         <p><strong>Address:</strong>{props.location.address}</p>

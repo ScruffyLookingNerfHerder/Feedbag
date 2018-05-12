@@ -77,7 +77,7 @@ class Groceries extends Component {
         <Row>
         <Col size="md-6">
           <Grocerytron>
-            <h1>What Books Should I Read?</h1>
+            <h1>What do I need?</h1>
           </Grocerytron>
           <form>
             <Input
@@ -102,13 +102,13 @@ class Groceries extends Component {
               disabled={!(this.state.author && this.state.title)}
               onClick={this.handleFormSubmit}
             >
-              Submit Book
+              Add Grocery
             </FormBtn>
           </form>
         </Col>
           <Col size="md-6 sm-12">
             <Grocerytron>
-              <h1>Books On My List</h1>
+              <h1>Shopping List</h1>
             </Grocerytron>
             {this.state.groceries.length ? (
               <List>

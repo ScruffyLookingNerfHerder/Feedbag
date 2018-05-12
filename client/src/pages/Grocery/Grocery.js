@@ -43,8 +43,8 @@ class Detail extends Component {
         </Row>
         <Row>
           <Col size="md-10 md-offset-1">
-            <article>
-              <h1>Synopsis</h1>
+            <article className = "Grocerynote">
+
               <p>
                 {this.state.Grocery.synopsis}
               </p>
@@ -53,7 +53,7 @@ class Detail extends Component {
         </Row>
         <Row>
           <Col size="md-2">
-            <Link to="/groceries/">← Back to Authors</Link>
+            <Link className="back" to="/groceries/">← Back to Authors</Link>
           </Col>
         </Row>
       </Container>

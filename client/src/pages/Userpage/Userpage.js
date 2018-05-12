@@ -14,14 +14,14 @@ componentDidMount() {
 if (!this.props.user) {
       return;
     }
-      console.log(this.props.user);
-        axios.get('/api/Restaurants/' + this.props.user.id)
-          .then(res => {
-            console.log(res.data);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+      // console.log(this.props.user);
+      //   axios.get('/api/Restaurants/' + this.props.user.id)
+      //     .then(res => {
+      //       console.log(res.data);
+      //     })
+      //     .catch(err => {
+      //       console.log(err);
+      //     });
     }
 
 render() {
@@ -33,7 +33,7 @@ render() {
         <Jumbotron />
         <SiteNav />
         <Circle />
-        
+
       </div>
     )
   }

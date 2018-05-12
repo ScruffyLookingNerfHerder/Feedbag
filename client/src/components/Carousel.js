@@ -3,7 +3,7 @@ import { Carousel } from "react-bootstrap";
 
 const Circle = () => (
 
-<Carousel>
+<Carousel className = "Carousel">
   <Carousel.Item>
     <img width={800} height={200} alt="800x200" src="/images/stove.jpg" />
     <Carousel.Caption>
