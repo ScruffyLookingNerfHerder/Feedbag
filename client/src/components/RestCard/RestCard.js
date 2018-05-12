@@ -2,7 +2,7 @@ import React from "react";
 
 const RestCard = props => (
 
-  <div className="card">
+  <div className="card RestCard">
     <div className="img-container">
     </div>
     <div className="content">
