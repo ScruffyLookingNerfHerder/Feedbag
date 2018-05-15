@@ -27,7 +27,19 @@ body {
   width: 70%;
 }
 
+.RecButton {
+  border-style: solid;
+  margin: 3%;
+  background-color: white;
+  border-color: black
+}
 
+.rest {
+  border-style: solid;
+  margin: 2%;
+  background-color: white;
+  border-color: black;
+}
 
 .container .jumbotron {
   border-radius: 50%;
@@ -89,6 +101,12 @@ h3 {
   height: 150px;
   padding: 20px;
   color: white;
+}
+
+.topBox {
+  border-style: solid;
+  border-color: black;
+  background-color: white;
 }
 
 .App-title {

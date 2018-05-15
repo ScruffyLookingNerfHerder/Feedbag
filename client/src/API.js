@@ -27,9 +27,9 @@ export default {
     })
   },
   getRec: function(recipeQuery) {
-    return axios.get(`/api/RecipeEXP/` + recipeQuery, {
-
-    })
+      return axios.get('/api/RecipeEXP/' + recipeQuery, {
+        params: {}
+      })
   }
 };
 // getRec: function(recipeQuery) {

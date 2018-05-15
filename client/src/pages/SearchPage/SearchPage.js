@@ -80,7 +80,7 @@ class SearchPage extends Component {
   }
 
   recConCat = (array) => {
-    return array.join(',');
+    return array.join('&');
   }
 
   handleInputChange = event => {
@@ -187,15 +187,17 @@ class SearchPage extends Component {
   loadRecipes = () => {
 
     let joinedRecS = this.recConCat(this.state.recSearch)
-    console.log(joinedRecS)
 
     API.getRec(joinedRecS)
       .then(res => {
+        console.log(res.data.recipes)
         const canscrape = ["All Recipes", "Closet Cooking", "101 Cookbooks", "BBC Good Food", "The Pioneer Woman", "Bon Appetit", "Jamie Oliver", "BBC Food", "Epicurious", "Tasty Kitchen", "Cookstr", "Simply Recipes"]
         const filteredrecs = res.data.recipes.filter(recipe => canscrape.includes(recipe.publisher))
+
         this.setState({
-          recipes: res.data.results
+          recipes: filteredrecs
         })
+
         this.setState({
           recResultsFound: this.state.recipes.length
         })
@@ -223,7 +225,7 @@ class SearchPage extends Component {
 // =======================
 renderRestCard = () => {
   let renderRestCard = this.state.venues.map(restaurant => (
-    <ResultButton key = {
+    <ResultButton  key = {
       restaurant.id
     }
     id = {
@@ -315,7 +317,8 @@ renderRecCards = () => {
     <RecResultButton key = {recipe.title}
     id = {recipe.title}
     href = {recipe.source_url}
-    ingredients = {recipe.ingredient} >
+    ingredients = {recipe.ingredient}
+    thumbnail = {recipe.image_url} >
     {
       RecipeCard(recipe)
     } </RecResultButton>
