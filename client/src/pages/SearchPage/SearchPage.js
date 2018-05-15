@@ -191,8 +191,8 @@ class SearchPage extends Component {
 
     API.getRec(joinedRecS)
       .then(res => {
-        // const canscrape = ["All Recipes", "Closet Cooking", "101 Cookbooks", "BBC Good Food", "The Pioneer Woman", "Bon Appetit", "Jamie Oliver", "BBC Food", "Epicurious", "Tasty Kitchen", "Cookstr", "Simply Recipes"]
-        // const filteredrecs = res.data.recipes.filter(recipe => canscrape.includes(recipe.publisher))
+        const canscrape = ["All Recipes", "Closet Cooking", "101 Cookbooks", "BBC Good Food", "The Pioneer Woman", "Bon Appetit", "Jamie Oliver", "BBC Food", "Epicurious", "Tasty Kitchen", "Cookstr", "Simply Recipes"]
+        const filteredrecs = res.data.recipes.filter(recipe => canscrape.includes(recipe.publisher))
         this.setState({
           recipes: res.data.results
         })

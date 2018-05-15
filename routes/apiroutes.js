@@ -81,22 +81,30 @@ router.route('/auth')
           });
       });
 
-      router.route('/Restaurants')
-        .get(mustBeLoggedIn(), RestaurantController.findAll)
-        .post(RestaurantController.create);
 
-      router.route('/Restaurants/:userid')
+      router.route('/Restaurants/:userid/')
         .get(mustBeLoggedIn(), RestaurantController.find)
         .put(mustBeLoggedIn(), RestaurantController.update)
         .delete(mustBeLoggedIn(), RestaurantController.remove)
+        .post(mustBeLoggedIn(), RestaurantController.create)
 
-      router.route('/Recipes')
-        .get(mustBeLoggedIn(), RecipeController.findAll)
-        .post(mustBeLoggedIn(), RecipeController.create)
+      router.route('/Restaurants/:userid/:id')
+        .get(mustBeLoggedIn(), RestaurantController.findById)
+        .put(mustBeLoggedIn(), RestaurantController.update)
+        .delete(mustBeLoggedIn(), RestaurantController.remove)
+        .post(mustBeLoggedIn(), RestaurantController.create)
+
       router.route('/Recipes/:userid')
         .get(mustBeLoggedIn(), RecipeController.find)
         .put(mustBeLoggedIn(), RecipeController.update)
         .delete(mustBeLoggedIn(), RecipeController.remove)
+        .post(mustBeLoggedIn(), RecipeController.create)
+
+      router.route('/Recipes/:userid/:id')
+        .get(mustBeLoggedIn(), RecipeController.findById)
+        .put(mustBeLoggedIn(), RecipeController.update)
+        .delete(mustBeLoggedIn(), RecipeController.remove)
+        .post(mustBeLoggedIn(), RecipeController.create)
 
       router.route('/Groceries/:userid/')
         .get(mustBeLoggedIn(), ToDoController.find)

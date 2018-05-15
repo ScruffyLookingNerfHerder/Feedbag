@@ -53,7 +53,7 @@ class Detail extends Component {
         </Row>
         <Row>
           <Col size="md-2">
-            <Link className="back" to="/groceries/">← Back to Authors</Link>
+            <Link className="back" to="/groceries/">← Back to Groceries</Link>
           </Col>
         </Row>
       </Container>

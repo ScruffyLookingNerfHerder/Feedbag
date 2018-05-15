@@ -27,10 +27,8 @@ export default {
     })
   },
   getRec: function(recipeQuery) {
-    return axios.get(`https://proxy.calweb.xyz/http://www.recipepuppy.com/api/?q=` + recipeQuery + `&oi=1`, {
-       params: {
+    return axios.get(`/api/RecipeEXP/` + recipeQuery, {
 
-       }
     })
   }
 };
