@@ -34,6 +34,13 @@ body {
   border-color: black
 }
 
+.RecipeResults {
+  border-style: solid;
+  margin: 3%;
+  background-color: white;
+  border-color: black
+}
+
 .rest {
   border-style: solid;
   margin: 2%;

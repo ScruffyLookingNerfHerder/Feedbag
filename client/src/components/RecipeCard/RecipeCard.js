@@ -13,7 +13,7 @@ const RecipeCard = props => (
         <div>
           <img className="imgThis" src={ props.image_url } alt="img"/>
         </div>
-      <p> <strong>Ingredients:</strong> { props.ingredients } </p>
+      
       <p><a href={ props.href }>Get the Full Recipe Here!</a> </p>
     </div>
   </div>

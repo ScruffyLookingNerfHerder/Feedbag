@@ -17,7 +17,10 @@ import Checkbox from "rc-checkbox";
 import searchOps from "./searchOps.json";
 import SiteNav from "../../components/SiteNav";
 import Jumbotron from "../../components/Jumbotron";
-import "./SearchPage.css"
+import "./SearchPage.css";
+import FavoriteButton from "../../components/FavoriteButton";
+import UnfavoriteButton from "../../components/UnfavoriteButton";
+
 
 
 class SearchPage extends Component {
@@ -208,13 +211,84 @@ class SearchPage extends Component {
     this.handleTruVenRecCard();
     API.getVenue(id)
       .then(res => {
-        console.log(res.data.response.venue)
+        const venue = res.data.response.venue
+        venue.isSaved = false
+        console.log(venue)
         this.setState({
-          singleVen: res.data.response.venue
+          singleVen: venue
         })
       })
       .catch(err => console.log(err));
 }
+
+removefromstate = (array, element) => {
+  console.log(element)
+
+  switch (array) {
+    case this.state.venues:
+      let newvenuestate = array.filter(e => e.id !== element)
+      return newvenuestate;
+    case this.state.recipes:
+      let newrecipestate = array.filter(e => e.recipe_id !== element)
+      return newrecipestate;
+    default:
+      break;
+  }
+
+
+}
+
+//Saves a restaurant to the database, then reloads restaurants from the db
+   saveRestaurant = (id, venue) => {
+     // Makes a clone of the current state by using the spread method on this.state
+
+     const user = this.props.user.id
+     const savedvenue = this.state.venues.filter(venue => venue.id === id);
+     const newvenues = this.removefromstate(this.state.venues, id);
+     console.log(newvenues)
+
+
+     const savedRestaurant = {
+       name: venue.name,
+       websiteURL: venue.url,
+       address: venue.location.address,
+       city: venue.location.city,
+       phone: venue.phone.formattedPhone,
+       User: user
+     }
+     API.saveRestaurant(this.props.user.id, savedRestaurant)
+       .then(res => {
+
+         this.setState({
+           venues: newvenues
+         });
+         console.log(this.state.venues)
+         this.renderRestCard()
+       })
+       .catch(err => console.log(err));
+   };
+
+   saveRecipe = (id, recipe) => {
+     console.log(id)
+     const user = this.props.user.id
+     const newrecipes = this.removefromstate(this.state.recipes, id);
+     const savedRecipe = {
+       publisher: recipe.publisher,
+       f2f_url: recipe.f2f_url,
+       title: recipe.title,
+       source_url: recipe.source_url,
+       id: recipe.recipe_id,
+       image: recipe.image_url,
+       User: user
+     }
+     API.saveRecipe(user, savedRecipe)
+     .then(res => {
+       this.setState({
+         recipes: newrecipes
+       });
+       this.renderRecCards()
+     })
+   }
 
 // =======================
 renderRestCard = () => {
@@ -267,6 +341,7 @@ renderVenCard = () => {
     }
     return (
       <div>
+        <FavoriteButton onClick={() => this.saveRestaurant(renderVenObj.id, renderVenObj)} />
       {VenCard(renderVenObj)}
       </div>
     )
@@ -275,28 +350,12 @@ renderVenCard = () => {
 
 
 renderRecCards = () => {
+  let recipecard = {}
   let renderRestCard = this.state.recipes.map(recipe => (
-    {/*
-    axios.get('/api/Ingredients/' + recipe.recipe_id)
-    .then(res => {
-      recipe.ingredients = res.data.ingredients
 
-    })
 
-    .catch(err => {
-      console.log(err)
-    }),
-
-    axios.get("/api/Steps/" + recipe.publisher + "/?url=" + recipe.source_url)
-    .then(res => {
-      console.log(res.data)
-      recipe.instructions = res.data.instructions
-
-    })
-    .catch(err => {
-      console.log(err)
-    }),
-    */},
+    <div className="RecipeResults">
+    <FavoriteButton onClick={()=> this.saveRecipe(recipe.recipe_id, recipe)}></FavoriteButton>
     <RecResultButton key = {recipe.title}
     id = {recipe.title}
     href = {recipe.source_url}
@@ -304,7 +363,10 @@ renderRecCards = () => {
     thumbnail = {recipe.image_url} >
     {
       RecipeCard(recipe)
-    } </RecResultButton>
+    }
+
+    </RecResultButton>
+  </div>
   ))
   return renderRestCard;
 }

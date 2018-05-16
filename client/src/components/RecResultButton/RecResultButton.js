@@ -6,3 +6,12 @@ const RecResultButton = props => (
 );
 
 export default RecResultButton;
+
+// <RecResultButton key = {recipe.title}
+// id = {recipe.title}
+// href = {recipe.source_url}
+// ingredients = {recipe.ingredient}
+// thumbnail = {recipe.image_url} >
+// {
+//   RecipeCard(recipecard)
+// } </RecResultButton>

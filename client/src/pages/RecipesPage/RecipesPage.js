@@ -61,4 +61,4 @@ render() {
   }
 }
 
-export default withUser(Userpage);
+export default Userpage;

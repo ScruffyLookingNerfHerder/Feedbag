@@ -37,7 +37,7 @@ render() {
       <div className = "container">
         <Jumbotron />
         <SiteNav />
-
+      <img src= {this.state.Recipe.image}></img>
       <h1> This is the page for {this.state.Recipe.title}</h1>
       <a href="/recipes"> Click here to go back to your favorite recipes!</a>
 
@@ -46,4 +46,4 @@ render() {
   }
 }
 
-export default withUser(Userpage);
+export default Userpage;

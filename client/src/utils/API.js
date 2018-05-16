@@ -49,10 +49,10 @@ export default {
   },
   //Deletes a Restaurant from the user's favorites
   deleteRestaurant: function( userid, id) {
-    return axios.get("/api/Restaurants/" + userid + "/" + id);
-  },
-  saveRestaurant: function(userid, id){
     return axios.delete("/api/Restaurants/" + userid + "/" + id);
+  },
+  saveRestaurant: function(userid, Restaurant){
+    return axios.post("/api/Restaurants/" + userid + "/", Restaurant);
   },
   getRest: function(near, catIds) {
     return axios.get(`https://api.foursquare.com/v2/venues/search`, {
@@ -82,6 +82,28 @@ export default {
   }
 
 };
+
+/*
+axios.get('/api/Ingredients/' + recipe.recipe_id)
+.then(res => {
+  recipe.ingredients = res.data.ingredients
+
+})
+
+.catch(err => {
+  console.log(err)
+}),
+
+axios.get("/api/Steps/" + recipe.publisher + "/?url=" + recipe.source_url)
+.then(res => {
+  console.log(res.data)
+  recipe.instructions = res.data.instructions
+
+})
+.catch(err => {
+  console.log(err)
+}),
+*/
 
 // getRec: function(recipeQuery) {
 //   return axios.get(`https://proxy.calweb.xyz/http://www.recipepuppy.com/api/?q=` + recipeQuery + `&oi=1`, {
