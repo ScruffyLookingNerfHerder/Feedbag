@@ -8,6 +8,10 @@ import API from "../../utils/API"
 
 class Userpage extends Component {
 
+constructor(props){
+  super(props);
+}
+
 state = {
   Recipe: {}
 }
@@ -27,19 +31,43 @@ if (!this.props.user) {
             console.log(err);
           });
 
+
     }
+
+getIngredients = (id) => {
+  API.getIngredients(id)
+    .then(res => {
+      console.log(res.data);
+    }).catch(err => {
+      console.log(err)
+    });
+}
+
+getSteps = (publisher, url) => {
+  API.getSteps(publisher, url)
+    .then(res => {
+      console.log(res.data);
+    }).catch(err => {
+      console.log(err)
+    });
+}
+
+
 
 render() {
     const { user } = this.props; // get the user prop from props
-
+    
 
     return (
       <div className = "container">
         <Jumbotron />
         <SiteNav />
       <img src= {this.state.Recipe.image}></img>
-      <h1> This is the page for {this.state.Recipe.title}</h1>
+      <h1>{this.state.Recipe.title}</h1>
       <a href="/recipes"> Click here to go back to your favorite recipes!</a>
+      <button onClick={this.getIngredients(this.state.Recipe.id)}> Ingredients</button>
+      <button onClick={this.getSteps(this.state.Recipe.publisher, this.state.Recipe.source_url)}>Steps</button>
+
 
       </div>
     )

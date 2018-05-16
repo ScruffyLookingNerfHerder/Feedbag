@@ -79,8 +79,13 @@ export default {
       return axios.get('/api/RecipeEXP/' + recipeQuery, {
         params: {}
       })
+  },
+  getIngredients: function(id) {
+    return axios.get('/api/Ingredients/' + id)
+  },
+  getSteps: function(publisher, url){
+    return axios.get('/api/Steps/' + publisher + "/?url=" + url)
   }
-
 };
 
 /*
