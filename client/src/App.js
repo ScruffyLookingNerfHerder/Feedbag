@@ -22,6 +22,8 @@ import RecipesPage from './pages/RecipesPage';
 import RestaurantsPage from './pages/RestaurantsPage';
 import GroceriesPage from './pages/Groceries';
 import GroceryPage from './pages/Grocery'
+import RecipePage from './pages/RecipePage';
+import RestaurantPage from './pages/RestaurantPage';
 
 class App extends Component {
   componentDidMount() {
@@ -51,7 +53,7 @@ class App extends Component {
               user={user}
             />
             <Switch>
-              
+
               <Route exact path="/" component={LoginPage} />
               <Route exact path="/create" component={CreateAccountPage} />
               <Route exact path="/auth/failed" component={AuthFailedPage} />
@@ -64,6 +66,8 @@ class App extends Component {
               <ProtectedRoute exact path="/restaurants" component={RestaurantsPage} />
               <ProtectedRoute exact path="/groceries" component={GroceriesPage} />
               <ProtectedRoute exact path="/groceries/:userid/:id" component={GroceryPage} />
+              <ProtectedRoute exact path="/recipes/:userid/:id" component={RecipePage} />
+              <ProtectedRoute exact path="/restaurants/:userid/:id" component={RestaurantPage} />
               <Route component={NotFoundPage} />
             </Switch>
           </Fragment>

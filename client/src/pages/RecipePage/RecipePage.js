@@ -4,15 +4,12 @@ import axios from "axios";
 import AuthFailedPage from "../AuthFailedPage";
 import SiteNav from "../../components/SiteNav";
 import Jumbotron from "../../components/Jumbotron";
-import ResultButton from "../../components/ResultButton"
-import FavoritedRecipeCard from "../../components/FavoritedRecipeCard"
-import Wrapper from "../../components/Wrapper"
 import API from "../../utils/API"
 
 class Userpage extends Component {
 
 state = {
-  recipes: []
+  Recipe: {}
 }
 
 componentDidMount() {
@@ -20,43 +17,31 @@ componentDidMount() {
 if (!this.props.user) {
       return;
     }
-        API.getRecipes(this.props.user.id)
+      console.log(this.props.user);
+        API.getRecipe(this.props.user.id, this.props.match.params.id)
           .then(res => {
-            this.setState({recipes: res.data})
+            this.setState({Recipe: res.data})
             console.log(res.data);
-          }).catch(err => {
-            console.log(err);
           })
-    }
+          .catch(err => {
+            console.log(err);
+          });
 
-renderCards = () => {
-  let renderCards = this.state.recipes.map(recipe => (
-    <a href= {`/recipes/${this.props.user.id}/${recipe._id}`}>
-      <ResultButton
-        key = {recipe.id}
-        id = {recipe.id}
-        >
-        {FavoritedRecipeCard(recipe)}
-      < /ResultButton>
-    </a>
-  ))
-  return renderCards
-}
+    }
 
 render() {
     const { user } = this.props; // get the user prop from props
 
 
     return (
-      <Wrapper>
       <div className = "container">
         <Jumbotron />
         <SiteNav />
 
-        {this.renderCards()}
+      <h1> This is the page for {this.state.Recipe.title}</h1>
+      <a href="/recipes"> Click here to go back to your favorite recipes!</a>
 
       </div>
-      </Wrapper>
     )
   }
 }

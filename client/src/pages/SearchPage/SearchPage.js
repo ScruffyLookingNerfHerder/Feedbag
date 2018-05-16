@@ -1,8 +1,6 @@
 // import "../../App.css";
-import React, {
-  Component
-} from "react";
-import API from "../../API"
+import React, {Component} from "react";
+import API from "../../utils/API"
 import Wrapper from "../../components/Wrapper";
 import RestCard from "../../components/RestCard";
 import VenCard from "../../components/VenCard";
@@ -10,12 +8,8 @@ import ResultButton from "../../components/ResultButton";
 import VenResultButton from "../../components/VenResultButton";
 import RecipeCard from "../../components/RecipeCard";
 import RecResultButton from "../../components/RecResultButton";
-import {
-  Link
-} from 'react-router-dom';
-import {
-  withUser
-} from '../../services/withUser';
+import {Link} from 'react-router-dom';
+import {withUser} from '../../services/withUser';
 import axios from "axios";
 
 import 'rc-checkbox/assets/index.css';
@@ -225,24 +219,13 @@ class SearchPage extends Component {
 // =======================
 renderRestCard = () => {
   let renderRestCard = this.state.venues.map(restaurant => (
-    <ResultButton  key = {
-      restaurant.id
-    }
-    id = {
-      restaurant.id
-    }
-    clicked = {
-      this.showRestInfo
-    }
-    clickVenueBtn = {
-      this.loadSingleVenue
-    }
-    clickHandleTru = {
-      this.handleTruVenRecCard
-    } >
-    {
-      RestCard(restaurant)
-    }
+    <ResultButton
+      key = {restaurant.id}
+      id = {restaurant.id}
+      clicked = {this.showRestInfo}
+      clickVenueBtn = {this.loadSingleVenue}
+      clickHandleTru = {this.handleTruVenRecCard} >
+    {RestCard(restaurant)}
     < /ResultButton>
   ))
   return renderRestCard;

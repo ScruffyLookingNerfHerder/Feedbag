@@ -15,14 +15,14 @@ const SiteNav = () => (
     <NavItem eventKey={1} href="/user">
         Userpage
       </NavItem>
-      {/*
+    
     <NavItem eventKey={1} href="/recipes">
         Your Recipes
     </NavItem>
     <NavItem eventKey={1} href="/restaurants">
         Your Restaurants
     </NavItem>
-    */}
+
     <NavItem eventKey={1} href="/groceries">
         Your Groceries
     </NavItem>

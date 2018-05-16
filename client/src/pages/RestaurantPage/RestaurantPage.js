@@ -12,51 +12,34 @@ import Wrapper from "../../components/Wrapper"
 import ResultButton from "../../components/ResultButton"
 import API from "../../utils/API"
 
-class RestaurantsPage extends Component {
+class RestaurantPage extends Component {
+
+  state ={
+    Restaurant: {}
+  }
+
 
 componentDidMount() {
 // only try loading stuff if the user is logged in.
 if (!this.props.user) {
       return;
     }
-
-      console.log(this.props.user);
-        API.getRestaurants(this.props.user.id)
-          .then(res => {
-            this.setState({restaurants: res.data})
-            console.log(res.data)
-          })
-          .catch(err => {
-            console.log(err);
-          });
-
+    console.log(this.props)
+    API.getRestaurant(this.props.user.id, this.props.match.params.id)
+    .then(res => {
+      this.setState({ Restaurant: res.data })
+      console.log(res.data)
+    })
+    .catch(err=>console.log(err));
   }
 
-state ={
-  restaurants: []
-}
 
-renderCards = () => {
-
-  let renderCards = this.state.restaurants.map(restaurant => (
-    <a href= {`/restaurants/${this.props.user.id}/${restaurant._id}`}>
-    <ResultButton
-      key= {restaurant.id}
-
-      id={restaurant.id}
-      >
-    {FavoritedRestCard(restaurant)}
-    < /ResultButton>
-    </a>
-  ))
-  return renderCards
-}
 
 
 render() {
-    const { user } = this.props; // get the user prop from props
 
-  
+
+
     return (
       <Wrapper>
       <div className = "container">
@@ -64,8 +47,9 @@ render() {
         <SiteNav />
 
       </div>
+      <h1> This is the page for {this.state.Restaurant.name}</h1>
+      <a href={`/restaurants/`}> Click Here to Go Back to your favorites </a>
 
-        {this.renderCards()}
 
       </Wrapper>
 
@@ -73,4 +57,4 @@ render() {
   }
 }
 
-export default RestaurantsPage;
+export default RestaurantPage;

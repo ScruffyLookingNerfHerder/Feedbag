@@ -23,7 +23,7 @@ class Detail extends Component {
   }
 
   render() {
-    const user = this.props.user.id
+    
     return (
 
       <Container fluid>
