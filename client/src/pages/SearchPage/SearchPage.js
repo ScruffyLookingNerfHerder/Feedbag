@@ -1,8 +1,6 @@
 // import "../../App.css";
-import React, {
-  Component
-} from "react";
-import API from "../../API"
+import React, {Component} from "react";
+import API from "../../utils/API"
 import Wrapper from "../../components/Wrapper";
 import RestCard from "../../components/RestCard";
 import VenCard from "../../components/VenCard";
@@ -10,12 +8,8 @@ import ResultButton from "../../components/ResultButton";
 import VenResultButton from "../../components/VenResultButton";
 import RecipeCard from "../../components/RecipeCard";
 import RecResultButton from "../../components/RecResultButton";
-import {
-  Link
-} from 'react-router-dom';
-import {
-  withUser
-} from '../../services/withUser';
+import {Link} from 'react-router-dom';
+import {withUser} from '../../services/withUser';
 import axios from "axios";
 
 import 'rc-checkbox/assets/index.css';
@@ -23,7 +17,10 @@ import Checkbox from "rc-checkbox";
 import searchOps from "./searchOps.json";
 import SiteNav from "../../components/SiteNav";
 import Jumbotron from "../../components/Jumbotron";
-import "./SearchPage.css"
+import "./SearchPage.css";
+import FavoriteButton from "../../components/FavoriteButton";
+import UnfavoriteButton from "../../components/UnfavoriteButton";
+
 
 
 class SearchPage extends Component {
@@ -80,7 +77,7 @@ class SearchPage extends Component {
   }
 
   recConCat = (array) => {
-    return array.join(',');
+    return array.join('&');
   }
 
   handleInputChange = event => {
@@ -187,15 +184,17 @@ class SearchPage extends Component {
   loadRecipes = () => {
 
     let joinedRecS = this.recConCat(this.state.recSearch)
-    console.log(joinedRecS)
 
     API.getRec(joinedRecS)
       .then(res => {
+        console.log(res.data.recipes)
         const canscrape = ["All Recipes", "Closet Cooking", "101 Cookbooks", "BBC Good Food", "The Pioneer Woman", "Bon Appetit", "Jamie Oliver", "BBC Food", "Epicurious", "Tasty Kitchen", "Cookstr", "Simply Recipes"]
         const filteredrecs = res.data.recipes.filter(recipe => canscrape.includes(recipe.publisher))
+
         this.setState({
-          recipes: res.data.results
+          recipes: filteredrecs
         })
+
         this.setState({
           recResultsFound: this.state.recipes.length
         })
@@ -212,35 +211,102 @@ class SearchPage extends Component {
     this.handleTruVenRecCard();
     API.getVenue(id)
       .then(res => {
-        console.log(res.data.response.venue)
+        const venue = res.data.response.venue
+        venue.isSaved = false
+        console.log(venue)
         this.setState({
-          singleVen: res.data.response.venue
+          singleVen: venue
         })
       })
       .catch(err => console.log(err));
 }
 
+removefromstate = (array, element) => {
+  console.log(element)
+
+  switch (array) {
+    case this.state.venues:
+      let newvenuestate = array.filter(e => e.id !== element)
+      return newvenuestate;
+    case this.state.recipes:
+      let newrecipestate = array.filter(e => e.recipe_id !== element)
+      return newrecipestate;
+    default:
+      break;
+  }
+
+
+}
+
+//Saves a restaurant to the database, then reloads restaurants from the db
+   saveRestaurant = (id, venue) => {
+     // Makes a clone of the current state by using the spread method on this.state
+
+     const user = this.props.user.id
+     const savedvenue = this.state.venues.filter(venue => venue.id === id);
+     const newvenues = this.removefromstate(this.state.venues, id);
+     console.log(newvenues)
+
+
+     const savedRestaurant = {
+       name: venue.name,
+       websiteURL: venue.url,
+       address: venue.location.address,
+       city: venue.location.city,
+       country: venue.location.cc,
+       state: venue.location.state,
+       phone: venue.phone.formattedPhone,
+       photos: venue.img,
+       lat: venue.location.lat,
+       lng: venue.location.lng,
+       User: user
+     }
+     console.log(venue)
+     console.log(savedRestaurant)
+     API.saveRestaurant(this.props.user.id, savedRestaurant)
+       .then(res => {
+
+         this.setState({
+           venues: newvenues
+         });
+         console.log(this.state.venues)
+         this.renderRestCard()
+       })
+       .catch(err => console.log(err));
+   };
+
+   saveRecipe = (id, recipe) => {
+     console.log(id)
+     const user = this.props.user.id
+     const newrecipes = this.removefromstate(this.state.recipes, id);
+     const savedRecipe = {
+       publisher: recipe.publisher,
+       f2f_url: recipe.f2f_url,
+       title: recipe.title,
+       source_url: recipe.source_url,
+       id: recipe.recipe_id,
+       image: recipe.image_url,
+       User: user
+     }
+     API.saveRecipe(user, savedRecipe)
+     .then(res => {
+       this.setState({
+         recipes: newrecipes
+       });
+       this.renderRecCards()
+     })
+   }
+
 // =======================
 renderRestCard = () => {
   let renderRestCard = this.state.venues.map(restaurant => (
-    <ResultButton key = {
-      restaurant.id
-    }
-    id = {
-      restaurant.id
-    }
-    clicked = {
-      this.showRestInfo
-    }
-    clickVenueBtn = {
-      this.loadSingleVenue
-    }
-    clickHandleTru = {
-      this.handleTruVenRecCard
-    } >
-    {
-      RestCard(restaurant)
-    }
+    <ResultButton
+      key = {restaurant.id}
+      id = {restaurant.id}
+      clicked = {this.showRestInfo}
+      clickVenueBtn = {this.loadSingleVenue}
+      clickHandleTru = {this.handleTruVenRecCard} >
+    {RestCard(restaurant)}
     < /ResultButton>
   ))
   return renderRestCard;
@@ -265,7 +331,8 @@ renderVenCard = () => {
         phone: singleVenObj.contact,
         url: singleVenObj.url,
         type: singleVenObj.categories,
-        img: imgPre + imgSuf
+        img: imgPre + imgSuf,
+
       }
     } else {
       renderVenObj = {
@@ -277,11 +344,13 @@ renderVenCard = () => {
         location: singleVenObj.location,
         phone: singleVenObj.contact,
         url: singleVenObj.url,
-        type: singleVenObj.categories
+        type: singleVenObj.categories,
+
       }
     }
     return (
-      <div>
+      <div className= "VenCardParent">
+        <FavoriteButton onClick={() => this.saveRestaurant(renderVenObj.id, renderVenObj)} />
       {VenCard(renderVenObj)}
       </div>
     )
@@ -290,42 +359,34 @@ renderVenCard = () => {
 
 
 renderRecCards = () => {
+  let recipecard = {}
   let renderRestCard = this.state.recipes.map(recipe => (
-    {/*
-    axios.get('/api/Ingredients/' + recipe.recipe_id)
-    .then(res => {
-      recipe.ingredients = res.data.ingredients
 
-    })
+    <ul>
+      <li>
+    <div className="RecipeResults">
 
-    .catch(err => {
-      console.log(err)
-    }),
-
-    axios.get("/api/Steps/" + recipe.publisher + "/?url=" + recipe.source_url)
-    .then(res => {
-      console.log(res.data)
-      recipe.instructions = res.data.instructions
-
-    })
-    .catch(err => {
-      console.log(err)
-    }),
-    */},
     <RecResultButton key = {recipe.title}
+
     id = {recipe.title}
     href = {recipe.source_url}
-    ingredients = {recipe.ingredient} >
+    ingredients = {recipe.ingredient}
+    thumbnail = {recipe.image_url} >
     {
       RecipeCard(recipe)
-    } </RecResultButton>
+    }
+    <FavoriteButton onClick={()=> this.saveRecipe(recipe.recipe_id, recipe)}></FavoriteButton>
+    </RecResultButton>
+  </div>
+    </li>
+  </ul>
   ))
   return renderRestCard;
 }
 
 renderCuisOp = () => {
   let renderSurvey = this.state.searchOps.map(checkbox => (
-    <button >
+    <button className = "rest cuisinelists" >
     <Checkbox key = {checkbox.id}
     id = {checkbox.id}
     name = "cuisineType"
@@ -354,7 +415,7 @@ renderCuisOp = () => {
             <p > Enter your location! </p>
               <input name = "loSearch" value = {this.state.loSearch} onChange = {this.handleInputChange} placeholder = "Location Search" />
 
-          <button onClick = {this.submitRecAndRestApi} type = "success" > Search </button>
+          <button className="thesubmitbtn" onClick = {this.submitRecAndRestApi} type = "success" > Search </button>
 
           <div>
             <p> Number of Venues Found: {this.state.restResultsFound}</p>
@@ -410,7 +471,7 @@ renderCuisOp = () => {
             <div className="renderVenCard col-lg-12 col-md-12 col-sm-12">
               {this.renderVenCard()}
             </div>
-            <div className="renderRestCard col-lg-offset-6 col-lg-9 col-md-12 col-md-offset-1 col-sm-12">
+            <div className="renderRestCard col-lg-offset-2 col-lg-9 col-md-12 col-md-offset-1 col-sm-12">
               {this.renderRestCard()}
             </div>
             <div className="renderRecCard col-lg-12 col-md-12 col-sm-12">

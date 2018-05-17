@@ -19,7 +19,8 @@ body {
   width: 50%;
   color: white;
   text-align: center;
-  font-size: 56px;
+  font-family: Writing, Helvetica, Arial, sans-serif;
+  font-size: 100%;
 }
 
 .navbar {
@@ -27,8 +28,42 @@ body {
   width: 70%;
 }
 
+.RecButton {
+  border-style: solid;
+  margin: 3%;
+  background-color: white;
+  border-color: black
+}
+
+@font-face {
+  font-family: Writing;
+  src: url("/images/writing.otf");
+}
+
+.rest {
+  border-style: solid;
+  border-radius: 12px;
+  margin: 2%;
+  background-color: rgba(40, 40, 40, .9);
+  color: white;
+  font-family: 'Amatic SC', cursive;
 
 
+}
+
+.rest p{
+  font-size: 20px;
+  color: white;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 5%;
+
+}
+
+.rest a{
+  color: white;
+  margin-bottom: 2%;
+}
 .container .jumbotron {
   border-radius: 50%;
 }
@@ -89,6 +124,12 @@ h3 {
   height: 150px;
   padding: 20px;
   color: white;
+}
+
+.topBox {
+  border-style: solid;
+  border-color: black;
+  background-color: white;
 }
 
 .App-title {

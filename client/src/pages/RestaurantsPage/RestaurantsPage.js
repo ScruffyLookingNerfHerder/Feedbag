@@ -9,6 +9,10 @@ import Circle from "../../components/Carousel"
 import RestCard from "../../components/RestCard"
 import FavoritedRestCard from "../../components/FavoritedRestCard"
 import Wrapper from "../../components/Wrapper"
+import FavRestButton from "../../components/FavRestButton"
+import API from "../../utils/API"
+import "./RestaurantsPage.css";
+
 
 class RestaurantsPage extends Component {
 
@@ -19,7 +23,7 @@ if (!this.props.user) {
     }
 
       console.log(this.props.user);
-        axios.get('/api/Restaurants/' + this.props.user.id)
+        API.getRestaurants(this.props.user.id)
           .then(res => {
             this.setState({restaurants: res.data})
             console.log(res.data)
@@ -27,12 +31,7 @@ if (!this.props.user) {
           .catch(err => {
             console.log(err);
           });
-          axios.get('/api/Recipes' +this.props.user.id)
-            .then(res => {
-              console.log(res.data);
-            }).catch(err => {
-              console.log(err);
-            })
+
   }
 
 state ={
@@ -42,9 +41,15 @@ state ={
 renderCards = () => {
 
   let renderCards = this.state.restaurants.map(restaurant => (
-    <button href= {`/restaurants/${restaurant.name}`}>
+    <a href= {`/restaurants/${this.props.user.id}/${restaurant._id}`}>
+    <FavRestButton
+      key= {restaurant.id}
+
+      id={restaurant.id}
+      >
     {FavoritedRestCard(restaurant)}
-    </button>
+    < /FavRestButton>
+    </a>
   ))
   return renderCards
 }
@@ -53,16 +58,20 @@ renderCards = () => {
 render() {
     const { user } = this.props; // get the user prop from props
 
-    console.log(this.state)
+
     return (
       <Wrapper>
       <div className = "container">
         <Jumbotron />
         <SiteNav />
 
+
+      <div className = "restaurantsboard">
+        <h1> {this.props.user.username}'s Restaurants!</h1>
+          {this.renderCards()}
+      </div>
       </div>
 
-        {this.renderCards()}
 
       </Wrapper>
 
@@ -70,4 +79,4 @@ render() {
   }
 }
 
-export default withUser(RestaurantsPage);
+export default RestaurantsPage;

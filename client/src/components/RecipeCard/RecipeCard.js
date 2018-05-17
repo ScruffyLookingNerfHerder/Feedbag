@@ -4,19 +4,20 @@ import "./RecipeCard.css"
 
 const RecipeCard = props => (
 
-
+  <div className="parent">
   <div className="card recRules">
     <div className="img-container">
     </div>
     <div className="content">
       <p><strong>{ props.title }</strong></p>
         <div>
-          <img className="imgThis" src={ props.thumbnail } alt="img"/>
+          <img className="imgThis" src={ props.image_url } alt="img"/>
         </div>
-      <p> <strong>Ingredients:</strong> { props.ingredients } </p>
+      
       <p><a href={ props.href }>Get the Full Recipe Here!</a> </p>
     </div>
   </div>
+</div>
 );
 
 export default RecipeCard;

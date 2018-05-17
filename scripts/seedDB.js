@@ -25,6 +25,21 @@ const RestaurantSeed = [
   }
 ];
 
+const RecipeSeed = [
+  {
+    title: "Old Fashioned",
+    href: "www.whiskeyisthebest.com",
+
+    User: mongoose.Types.ObjectId("5ae7a54445d6f16058cc2b98")
+  },
+  {
+    title: "Gin Rickey",
+    href: "www.ginisthebest.com",
+
+    User: mongoose.Types.ObjectId("5ae48d1e4ada39390c7f857f")
+  }
+]
+
 db.Restaurant
   .remove({})
   .then(() => db.Restaurant.collection.insertMany(RestaurantSeed))
@@ -35,4 +50,16 @@ db.Restaurant
   .catch(err => {
     console.error(err);
     process.exit(1);
+  })
+
+db.Recipe
+  .remove({})
+  .then(()=> db.Recipe.collection.insertMany(RecipeSeed))
+  .then(data => {
+    console.log(data.insertedIds.length + "records inserted!");
+    process.exit(0);
+  })
+  .catch(err => {
+    console.error(err);
+    process.exit(1)
   })

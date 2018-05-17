@@ -52,7 +52,7 @@ class CreateAccountPage extends Component {
     })
       .then(user => {
         // if the response is successful, make them log in
-        history.push('/login');
+        history.push('/');
       })
       .catch(err => {
 

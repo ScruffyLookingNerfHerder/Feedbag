@@ -9,6 +9,7 @@ import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
 import SiteNav from "../../components/SiteNav";
 import Jumbotron from "../../components/Jumbotron";
+import "./Groceries.css"
 
 
 class Groceries extends Component {
@@ -84,19 +85,19 @@ class Groceries extends Component {
               value={this.state.title}
               onChange={this.handleInputChange}
               name="title"
-              placeholder="Title (required)"
+              placeholder="Grocery (required)"
             />
             <Input
               value={this.state.author}
               onChange={this.handleInputChange}
               name="author"
-              placeholder="Author (required)"
+              placeholder="Person adding Grocery (required)"
             />
             <TextArea
               value={this.state.synopsis}
               onChange={this.handleInputChange}
               name="synopsis"
-              placeholder="Synopsis (Optional)"
+              placeholder="Notes (Optional)"
             />
             <FormBtn
               disabled={!(this.state.author && this.state.title)}
@@ -110,14 +111,17 @@ class Groceries extends Component {
             <Grocerytron>
               <h1>Shopping List</h1>
             </Grocerytron>
+            <div className= "Groceriesboard">
             {this.state.groceries.length ? (
+
               <List>
                 {this.state.groceries.map(groceries => {
                   return (
-                  <ListItem key={groceries._id}>
+
+                  <ListItem class="newgrocery" key={groceries._id}>
                     <a href={"/Groceries/"+ this.props.user.id + "/" + groceries._id}>
                       <strong>
-                        {groceries.title} by {groceries.author}
+                        {groceries.title} for {groceries.author}
                       </strong>
                     </a>
                     <DeleteBtn onClick={() => this.deleteGroceries(this.props.user.id, groceries._id)}/>
@@ -125,9 +129,11 @@ class Groceries extends Component {
                 );
               })}
               </List>
+
             ) : (
               <h3>No Results to Display</h3>
             )}
+            </div>
           </Col>
         </Row>
       </Container>
@@ -135,4 +141,4 @@ class Groceries extends Component {
   }
 }
 
-export default withUser(Groceries);
+export default (Groceries);

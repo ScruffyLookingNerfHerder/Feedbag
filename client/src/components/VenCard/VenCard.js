@@ -1,12 +1,14 @@
 import React from "react";
 import "./VenCard.css";
 
+
 const VenCard = props => (
 
   <div className="venCardStyle panel panel-default">
     <div className="img-container">
     </div>
     <div className="panel-body">
+
       { props.img ? (
         <div className="imgContainer">
           <img src={ props.img } alt="img" className = "imgMaxSize"/>
