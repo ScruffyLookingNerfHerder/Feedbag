@@ -2,6 +2,8 @@
   border-style: double;
   border-color: white;
   margin-left: 30%;
+  height: 20%;
+  width: 20%;
 
 }
 
@@ -48,5 +50,3 @@
 .back a{
   color: white;
 }
-
-export default Userpage;

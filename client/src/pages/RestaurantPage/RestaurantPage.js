@@ -48,21 +48,21 @@ render() {
         <Jumbotron />
         <SiteNav />
 
-      </div className = "restaurant">
-      <img src= "restaurantimg src ="{this.state.Restaurant.photos}></img>
+      </div >
+      <img className="restaurantimg" src={this.state.Restaurant.photos}></img>
         <h1> {this.state.Restaurant.name}</h1>
         <img className="chalkpic" src="/images/chalk-border.png"></img>
         <div className = "ingredientsandsteps">
         <h2> Address: {this.state.Restaurant.address} </h2>
         <h3> City: {this.state.Restaurant.city} </h3>
-        <h4> State: {this.state.Restaurant.State} </h4>
+        <h4> State: {this.state.Restaurant.state} </h4>
         <h5> Country: {this.state.Restaurant.country} </h5>
-        <h6> Website: {this.state.Restaurant.websiteURL} </h6>
+        <h6> Website: <a href={this.state.Restaurant.websiteURL}> {this.state.Restaurant.name} </a> </h6>
 
         <div className="back">
           <span>
       <a href={`/restaurants/`}> Click Here to Go Back to your favorites </a>
-</span>
+      </span>
 </div>
 </div>
 
