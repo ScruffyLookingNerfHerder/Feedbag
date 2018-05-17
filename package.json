@@ -19,7 +19,6 @@
     "nodemon": "^1.11.0"
   },
   "dependencies": {
-    "react-scripts": "1.0.14",
     "axios": "^0.18.0",
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
@@ -38,9 +37,11 @@
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "rc-checkbox": "^2.1.5",
-    "request": "^2.85.0",
-    "twitter": "^1.7.1",
     "react": "^16.0.0",
-    "react-router-dom": "^4.2.2"
+    "react-bootstrap": "^0.32.1",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.14",
+    "request": "^2.85.0",
+    "twitter": "^1.7.1"
   }
 }

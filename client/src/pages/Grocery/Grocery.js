@@ -5,6 +5,7 @@ import Grocerytron from "../../components/Grocerytron";
 import API from "../../utils/API";
 import SiteNav from "../../components/SiteNav";
 import Jumbotron from "../../components/Jumbotron";
+import "./Grocery.css"
 
 class Detail extends Component {
   state = {
@@ -23,7 +24,7 @@ class Detail extends Component {
   }
 
   render() {
-    
+
     return (
 
       <Container fluid>
@@ -53,7 +54,7 @@ class Detail extends Component {
         </Row>
         <Row>
           <Col size="md-2">
-            <Link className="back" to="/groceries/">← Back to Groceries</Link>
+            <Link className="Groceryback" to="/groceries/">← Back to Groceries</Link>
           </Col>
         </Row>
       </Container>

@@ -9,8 +9,10 @@ import Circle from "../../components/Carousel"
 import RestCard from "../../components/RestCard"
 import FavoritedRestCard from "../../components/FavoritedRestCard"
 import Wrapper from "../../components/Wrapper"
-import ResultButton from "../../components/ResultButton"
+import FavRestButton from "../../components/FavRestButton"
 import API from "../../utils/API"
+import "./RestaurantsPage.css";
+
 
 class RestaurantsPage extends Component {
 
@@ -40,13 +42,13 @@ renderCards = () => {
 
   let renderCards = this.state.restaurants.map(restaurant => (
     <a href= {`/restaurants/${this.props.user.id}/${restaurant._id}`}>
-    <ResultButton
+    <FavRestButton
       key= {restaurant.id}
 
       id={restaurant.id}
       >
     {FavoritedRestCard(restaurant)}
-    < /ResultButton>
+    < /FavRestButton>
     </a>
   ))
   return renderCards
@@ -56,16 +58,20 @@ renderCards = () => {
 render() {
     const { user } = this.props; // get the user prop from props
 
-  
+
     return (
       <Wrapper>
       <div className = "container">
         <Jumbotron />
         <SiteNav />
 
+
+      <div className = "restaurantsboard">
+        <h1> {this.props.user.username}'s Restaurants!</h1>
+          {this.renderCards()}
+      </div>
       </div>
 
-        {this.renderCards()}
 
       </Wrapper>
 

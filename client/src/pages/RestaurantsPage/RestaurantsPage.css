@@ -1,13 +1,14 @@
-.recipeboard{
+.restaurantsboard{
   margin-top: 5%;
+  background-image: url("/images/board.jpg");
+  background-size: contain;
+  height: 100%;
   border-style: groove;
   border-color: rgb(184, 82,77);
   border-width: 10px;
-
-  background-color: rgba(40, 40, 40, .9);
 }
 
-.recipeboard h1{
+.restaurantsboard h1{
   font-family: Writing, Helvetica, Arial, sans-serif;
   color: white;
   text-align: center;

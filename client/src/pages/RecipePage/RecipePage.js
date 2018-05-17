@@ -86,10 +86,10 @@ render() {
 
       <div className = "recipe">
         <img className= "recipeimg" src= {this.state.Recipe.image}></img>
-      <h4>{this.state.Recipe.title}</h4>
+      <p className = "specificrecipeheaders">{this.state.Recipe.title}</p>
       <img className="chalkpic" src="/images/chalk-border.png"></img>
       <div className = "ingredientsandsteps">
-        <h4> Ingredients </h4>
+        <p className= "specificrecipeheaders"> Ingredients </p>
         {this.state.Recipe.ingredients ? (
           <ol>
             {this.renderarrays(this.state.Recipe.ingredients)}
@@ -98,7 +98,7 @@ render() {
           <h3> Please wait while we retrieve the recipe ingredients</h3>
         )}
 
-        <h4> Steps </h4>
+        <p className="specificrecipeheaders"> Steps </p>
         {this.state.Recipe.steps ? (
           <ul>
             {this.renderarrays(this.state.Recipe.steps)}

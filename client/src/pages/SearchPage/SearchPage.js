@@ -331,7 +331,8 @@ renderVenCard = () => {
         phone: singleVenObj.contact,
         url: singleVenObj.url,
         type: singleVenObj.categories,
-        img: imgPre + imgSuf
+        img: imgPre + imgSuf,
+
       }
     } else {
       renderVenObj = {
@@ -343,11 +344,12 @@ renderVenCard = () => {
         location: singleVenObj.location,
         phone: singleVenObj.contact,
         url: singleVenObj.url,
-        type: singleVenObj.categories
+        type: singleVenObj.categories,
+
       }
     }
     return (
-      <div>
+      <div className= "VenCardParent">
         <FavoriteButton onClick={() => this.saveRestaurant(renderVenObj.id, renderVenObj)} />
       {VenCard(renderVenObj)}
       </div>
@@ -360,10 +362,12 @@ renderRecCards = () => {
   let recipecard = {}
   let renderRestCard = this.state.recipes.map(recipe => (
 
-
+    <ul>
+      <li>
     <div className="RecipeResults">
-    <FavoriteButton onClick={()=> this.saveRecipe(recipe.recipe_id, recipe)}></FavoriteButton>
+
     <RecResultButton key = {recipe.title}
+
     id = {recipe.title}
     href = {recipe.source_url}
     ingredients = {recipe.ingredient}
@@ -371,16 +375,18 @@ renderRecCards = () => {
     {
       RecipeCard(recipe)
     }
-
+    <FavoriteButton onClick={()=> this.saveRecipe(recipe.recipe_id, recipe)}></FavoriteButton>
     </RecResultButton>
   </div>
+    </li>
+  </ul>
   ))
   return renderRestCard;
 }
 
 renderCuisOp = () => {
   let renderSurvey = this.state.searchOps.map(checkbox => (
-    <button >
+    <button className = "rest cuisinelists" >
     <Checkbox key = {checkbox.id}
     id = {checkbox.id}
     name = "cuisineType"
@@ -409,7 +415,7 @@ renderCuisOp = () => {
             <p > Enter your location! </p>
               <input name = "loSearch" value = {this.state.loSearch} onChange = {this.handleInputChange} placeholder = "Location Search" />
 
-          <button onClick = {this.submitRecAndRestApi} type = "success" > Search </button>
+          <button className="thesubmitbtn" onClick = {this.submitRecAndRestApi} type = "success" > Search </button>
 
           <div>
             <p> Number of Venues Found: {this.state.restResultsFound}</p>
@@ -465,7 +471,7 @@ renderCuisOp = () => {
             <div className="renderVenCard col-lg-12 col-md-12 col-sm-12">
               {this.renderVenCard()}
             </div>
-            <div className="renderRestCard col-lg-offset-6 col-lg-9 col-md-12 col-md-offset-1 col-sm-12">
+            <div className="renderRestCard col-lg-offset-2 col-lg-9 col-md-12 col-md-offset-1 col-sm-12">
               {this.renderRestCard()}
             </div>
             <div className="renderRecCard col-lg-12 col-md-12 col-sm-12">

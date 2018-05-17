@@ -14,7 +14,7 @@ phone:String,
 lat: String,
 lng: String,
 User:{
-  type: Schema.Types.ObjectId, ref: "users"
+ type: Schema.Types.ObjectId, ref: "users"
 }
 
 });

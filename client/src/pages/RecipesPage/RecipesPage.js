@@ -21,6 +21,7 @@ componentDidMount() {
 if (!this.props.user) {
       return;
     }
+      console.log(this.props.user)
         API.getRecipes(this.props.user.id)
           .then(res => {
             this.setState({recipes: res.data})
@@ -33,7 +34,7 @@ if (!this.props.user) {
 renderCards = () => {
   let renderCards = this.state.recipes.map(recipe => (
     <a href= {`/recipes/${this.props.user.id}/${recipe._id}`}>
-      <ResultButton 
+      <ResultButton
         key = {recipe.id}
         id = {recipe.id}
         >
@@ -54,6 +55,7 @@ render() {
         <Jumbotron />
         <SiteNav />
         <div className = "recipeboard">
+          <h1> {this.props.user.username}'s Recipes!</h1>
         {this.renderCards()}
       </div>
       </div>

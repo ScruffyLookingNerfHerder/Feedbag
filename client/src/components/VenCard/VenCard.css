@@ -13,7 +13,7 @@
 .venCardStyle {
   width: 600px;
   height: 600px;
-  background-color: white;
+  background-color: rgba(40, 40, 40, .9);
   margin: auto;
   margin-bottom: 50px;
   margin-top: 15px;
@@ -28,7 +28,17 @@
   padding-top: 5px;
   align-content: auto;
   text-decoration: none;
-  line-height: 25px
+  line-height: 25px;
+  color: white;
+}
+
+.infoBox p {
+  color: white;
+}
+
+.infoBox a {
+  color: white;
+  text-decoration: underline;
 }
 
 .linkStyle {
@@ -37,10 +47,10 @@
 
 p {
   margin: 0px;
-  color: black
+  color: white;
 }
 
 a {
-  text-decoration: none;
-  color: green
+  text-decoration: underline;
+  color: white;
 }

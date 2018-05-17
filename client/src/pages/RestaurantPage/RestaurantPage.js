@@ -11,6 +11,7 @@ import FavoritedRestCard from "../../components/FavoritedRestCard"
 import Wrapper from "../../components/Wrapper"
 import ResultButton from "../../components/ResultButton"
 import API from "../../utils/API"
+import "./RestaurantPage.css";
 
 class RestaurantPage extends Component {
 
@@ -37,7 +38,8 @@ if (!this.props.user) {
 
 
 render() {
-
+  const { user } = this.props; // get the user prop from props
+  console.log(this.state.Restaurant)
 
 
     return (
@@ -46,9 +48,26 @@ render() {
         <Jumbotron />
         <SiteNav />
 
-      </div>
-      <h1> This is the page for {this.state.Restaurant.name}</h1>
+      </div >
+
+
+        <div className = "specificrestaurantinfo">
+          <h1> {this.state.Restaurant.name}</h1>
+          <img className="chalkpic" src="/images/chalk-border.png"></img>
+          <img className="specificrestaurantimg" src={this.state.Restaurant.photos}></img>
+        <h2> Address: {this.state.Restaurant.address} </h2>
+        <h2> City: {this.state.Restaurant.city} </h2>
+        <h2> State: {this.state.Restaurant.state} </h2>
+        <h2> Country: {this.state.Restaurant.country} </h2>
+        <h5> Website: <a href={this.state.Restaurant.websiteURL}> {this.state.Restaurant.name} </a> </h5>
+
+        <div className="back">
+          <span>
       <a href={`/restaurants/`}> Click Here to Go Back to your favorites </a>
+      </span>
+</div>
+</div>
+
 
 
       </Wrapper>

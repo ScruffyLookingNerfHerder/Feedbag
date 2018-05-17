@@ -19,7 +19,8 @@ body {
   width: 50%;
   color: white;
   text-align: center;
-  font-size: 56px;
+  font-family: Writing, Helvetica, Arial, sans-serif;
+  font-size: 100%;
 }
 
 .navbar {
@@ -34,11 +35,9 @@ body {
   border-color: black
 }
 
-.RecipeResults {
-  border-style: solid;
-  margin: 3%;
-  background-color: white;
-  border-color: black
+@font-face {
+  font-family: Writing;
+  src: url("/images/writing.otf");
 }
 
 .rest {
@@ -49,9 +48,11 @@ body {
   color: white;
   font-family: 'Amatic SC', cursive;
 
+
 }
 
 .rest p{
+  font-size: 20px;
   color: white;
   margin-left: 5%;
   margin-right: 5%;
