@@ -141,4 +141,4 @@ class Groceries extends Component {
   }
 }
 
-export default withUser(Groceries);
+export default (Groceries);
