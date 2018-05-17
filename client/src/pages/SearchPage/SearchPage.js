@@ -253,9 +253,17 @@ removefromstate = (array, element) => {
        websiteURL: venue.url,
        address: venue.location.address,
        city: venue.location.city,
+       country: venue.location.cc,
+       State: venue.location.state,
        phone: venue.phone.formattedPhone,
+       photos: venue.img,
+       lat: venue.location.lat,
+       lng: venue.location.lng,
        User: user
      }
+
+
+
      API.saveRestaurant(this.props.user.id, savedRestaurant)
        .then(res => {
 

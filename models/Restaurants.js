@@ -6,11 +6,15 @@ const RestaurantSchema = new mongoose.Schema({
 name: String,
 websiteURL: String,
 address: String,
+city: String,
+country: String,
+State: String,
 photos: String,
-location: String,
 phone:String,
+lat: String,
+lng: String,
 User:{
-  type: Schema.Types.ObjectId, ref: "users"
+ type: Schema.Types.ObjectId, ref: "users"
 }
 
 });
