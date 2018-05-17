@@ -4,7 +4,8 @@ import axios from "axios";
 import AuthFailedPage from "../AuthFailedPage";
 import SiteNav from "../../components/SiteNav";
 import Jumbotron from "../../components/Jumbotron";
-import API from "../../utils/API"
+import API from "../../utils/API";
+import "./RecipePage.css";
 
 class Userpage extends Component {
 
@@ -17,21 +18,35 @@ state = {
 }
 
 componentDidMount() {
-// only try loading stuff if the user is logged in.
+// only try loading Recipe if the user is logged in.
 if (!this.props.user) {
       return;
     }
       console.log(this.props.user);
+      let recipe = {}
         API.getRecipe(this.props.user.id, this.props.match.params.id)
           .then(res => {
             this.setState({Recipe: res.data})
-            console.log(res.data);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+            recipe = res.data
 
+            API.getIngredients(this.state.Recipe.id)
+            .then(res => {
+              recipe.ingredients = res.data.ingredients
+              this.setState({Recipe: recipe})
+              API.updateRecipe(this.props.user.id, this.props.match.params.id, this.state.Recipe)
+            }).catch(err => console.log(err))
+            API.getSteps(this.state.Recipe.publisher, this.state.Recipe.source_url)
+            .then(res => {
+              recipe.steps = res.data.steps
+              this.setState({Recipe: recipe})
+              API.updateRecipe(this.props.user.id, this.props.match.params.id, this.state.Recipe)
+              .then(res => {
+                console.log(res.data)
+              })
+              console.log(this.state.Recipe)
+            }).catch(err => console.log(err))
 
+          }).catch(err => console.log(err))
     }
 
 getIngredients = (id) => {
@@ -52,21 +67,56 @@ getSteps = (publisher, url) => {
     });
 }
 
+renderarrays =(array) => {
+  let display = array.map(element => (
+    <li>{element}</li>
+  ))
+  return display;
+}
 
 
 render() {
     const { user } = this.props; // get the user prop from props
-    
+    console.log(this.state.Recipe)
 
     return (
       <div className = "container">
         <Jumbotron />
         <SiteNav />
-      <img src= {this.state.Recipe.image}></img>
-      <h1>{this.state.Recipe.title}</h1>
+
+      <div className = "recipe">
+        <img className= "recipeimg" src= {this.state.Recipe.image}></img>
+      <h4>{this.state.Recipe.title}</h4>
+      <img className="chalkpic" src="/images/chalk-border.png"></img>
+      <div className = "ingredientsandsteps">
+        <h4> Ingredients </h4>
+        {this.state.Recipe.ingredients ? (
+          <ol>
+            {this.renderarrays(this.state.Recipe.ingredients)}
+          </ol>
+        ) : (
+          <h3> Please wait while we retrieve the recipe ingredients</h3>
+        )}
+
+        <h4> Steps </h4>
+        {this.state.Recipe.steps ? (
+          <ul>
+            {this.renderarrays(this.state.Recipe.steps)}
+          </ul>
+        ) : (
+            <h3> Please wait while we retrieve the recipe steps</h3>
+
+        )}
+
+      </div>
+      <div className="back">
+        <span>
       <a href="/recipes"> Click here to go back to your favorite recipes!</a>
-      <button onClick={this.getIngredients(this.state.Recipe.id)}> Ingredients</button>
-      <button onClick={this.getSteps(this.state.Recipe.publisher, this.state.Recipe.source_url)}>Steps</button>
+      </span>
+      </div>
+      </div>
+
+
 
 
       </div>

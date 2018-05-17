@@ -9,6 +9,8 @@ title: String,
 source_url: String,
 id: String,
 image: String,
+ingredients: Array,
+steps: Array,
 User:{
   type: Schema.Types.ObjectId, ref: "users"
 }

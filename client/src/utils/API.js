@@ -35,6 +35,10 @@ export default {
   saveRecipe: function(userid, Recipe) {
     return axios.post("/api/Recipes/" + userid + "/", Recipe);
   },
+  //Update a recipe in the user's database
+  updateRecipe: function(userid, id, Recipe) {
+    return axios.put("/api/Recipes/" + userid + "/" + id, Recipe)
+  },
   //Deletes a recipe from the user's database
   deleteRecipe: function(userid, id) {
     return axios.delete("/api/Recipes/" + userid + "/" + id);

@@ -8,6 +8,7 @@ import ResultButton from "../../components/ResultButton"
 import FavoritedRecipeCard from "../../components/FavoritedRecipeCard"
 import Wrapper from "../../components/Wrapper"
 import API from "../../utils/API"
+import "./RecipesPage.css"
 
 class Userpage extends Component {
 
@@ -32,7 +33,7 @@ if (!this.props.user) {
 renderCards = () => {
   let renderCards = this.state.recipes.map(recipe => (
     <a href= {`/recipes/${this.props.user.id}/${recipe._id}`}>
-      <ResultButton
+      <ResultButton 
         key = {recipe.id}
         id = {recipe.id}
         >
@@ -52,9 +53,9 @@ render() {
       <div className = "container">
         <Jumbotron />
         <SiteNav />
-
+        <div className = "recipeboard">
         {this.renderCards()}
-
+      </div>
       </div>
       </Wrapper>
     )
