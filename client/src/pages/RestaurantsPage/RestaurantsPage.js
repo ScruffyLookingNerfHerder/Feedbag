@@ -42,6 +42,7 @@ renderCards = () => {
 
   let renderCards = this.state.restaurants.map(restaurant => (
     <a href= {`/restaurants/${this.props.user.id}/${restaurant._id}`}>
+
     <FavRestButton
       key= {restaurant.id}
 
@@ -53,6 +54,8 @@ renderCards = () => {
   ))
   return renderCards
 }
+
+
 
 
 render() {
