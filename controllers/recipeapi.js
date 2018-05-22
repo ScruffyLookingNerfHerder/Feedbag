@@ -112,12 +112,14 @@ module.exports = {
         return axios.get(source)
         .then((response) => {
           let $ = cheerio.load(response.data)
-          $("[id^|=recipe-instructions-]").each(function(i, element){
+          $("[id^=recipe-instructions]").each(function(i, element){
+            let step;
             if($(element).children().hasClass('panel-body') === true){
-              let step = $(element).text();
+                step = $(element).text();
+                instructions.steps.push(step)
               }
             })
-          instructions.steps.push(step)
+
           res.json(instructions)
           })
 

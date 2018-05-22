@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
+    "dotenv": "^5.0.1",
     "material-ui": "^0.20.0",
     "rc-checkbox": "^2.1.5",
     "react": "^16.0.0",
