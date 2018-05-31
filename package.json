@@ -10,7 +10,8 @@
     "build": "node scripts/build.js",
     "deploy": "npm run build && git add . && git commit -m \"Building for production\" && git push heroku master",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed": "node scripts/seedDB.js"
+    "seed": "node scripts/seedDB.js",
+    "installDeps": "yarn && cd client && yarn"
   },
   "author": "Alex H <08ahayden@gmail.com>",
   "license": "ISC",
