@@ -16,6 +16,7 @@ require('dotenv').config();
 const cliID = process.env.CLIENT_ID;
 const clieSec= process.env.CLIENT_SECRET;
 
+//this is a comment to see if git will actually realize it's online empty respository is not "up to date"
 
 
 // Serve up static assets (usually on heroku)
