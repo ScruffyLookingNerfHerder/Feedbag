@@ -279,6 +279,10 @@ removefromstate = (array, element) => {
      console.log(id)
      const user = this.props.user.id
      const newrecipes = this.removefromstate(this.state.recipes, id);
+     this.setState({
+       recipes: newrecipes
+     });
+     this.renderRecCards()
      const savedRecipe = {
        publisher: recipe.publisher,
        f2f_url: recipe.f2f_url,
@@ -286,15 +290,33 @@ removefromstate = (array, element) => {
        source_url: recipe.source_url,
        id: recipe.recipe_id,
        image: recipe.image_url,
-       User: user
+       User: user,
+
      }
-     API.saveRecipe(user, savedRecipe)
-     .then(res => {
-       this.setState({
-         recipes: newrecipes
-       });
-       this.renderRecCards()
-     })
+     console.log(savedRecipe)
+
+     API.getIngredients(recipe.recipe_id)
+     .then(res=> {
+
+      savedRecipe.ingredients = res.data.ingredients
+      API.getSteps(recipe.publisher, recipe.source_url)
+        .then(res=> {
+          savedRecipe.steps = res.data.steps
+          API.saveRecipe(user, savedRecipe)
+          .then(res=>{
+
+
+          })
+        })
+      }).catch(err => console.log(err));
+
+     // API.saveRecipe(user, savedRecipe)
+     // .then(res => {
+     //   this.setState({
+     //     recipes: newrecipes
+     //   });
+     //   this.renderRecCards()
+     // })
    }
 
 // =======================
@@ -370,7 +392,7 @@ renderRecCards = () => {
 
     id = {recipe.title}
     href = {recipe.source_url}
-    ingredients = {recipe.ingredient}
+
     thumbnail = {recipe.image_url} >
     {
       RecipeCard(recipe)

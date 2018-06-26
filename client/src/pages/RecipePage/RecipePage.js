@@ -22,37 +22,50 @@ componentDidMount() {
 if (!this.props.user) {
       return;
     }
-      console.log(this.props.user);
-      let recipe = {}
-        API.getRecipe(this.props.user.id, this.props.match.params.id)
-          .then(res => {
-            this.setState({Recipe: res.data})
-            recipe = res.data
 
-            API.getIngredients(this.state.Recipe.id)
-            .then(res => {
-              recipe.ingredients = res.data.ingredients
-              this.setState({Recipe: recipe})
-              API.updateRecipe(this.props.user.id, this.props.match.params.id, this.state.Recipe)
-            }).catch(err => console.log(err))
-            API.getSteps(this.state.Recipe.publisher, this.state.Recipe.source_url)
-            .then(res => {
-              recipe.steps = res.data.steps
-              this.setState({Recipe: recipe})
-              API.updateRecipe(this.props.user.id, this.props.match.params.id, this.state.Recipe)
-              .then(res => {
-                console.log(res.data)
-              })
-              console.log(this.state.Recipe)
-            }).catch(err => console.log(err))
+  API.getRecipe(this.props.user.id, this.props.match.params.id)
+  .then(res=> {
+    this.setState({Recipe: res.data})
 
-          }).catch(err => console.log(err))
+  }).catch(err=> console.log(err));
+      //initialize blank recipe let for copying state
+      // let recipe = {}
+      //hit API for selected recipe based on user id and params provided
+        // API.getRecipe(this.props.user.id, this.props.match.params.id)
+        //   .then(res => {
+            //set state to recipe pulled from API
+          //   this.setState({Recipe: res.data})
+          //   recipe = res.data
+          //   console.log(recipe)
+          //
+          //   API.getIngredients(this.state.Recipe.id)
+          //   .then(res => {
+          //     recipe.ingredients = res.data.ingredients
+          //     this.setState({Recipe: recipe})
+          //     API.updateRecipe(this.props.user.id, this.props.match.params.id, this.state.Recipe)
+          //   }).catch(err => console.log(err)),
+          //
+          //   API.getSteps(this.state.Recipe.publisher, this.state.Recipe.source_url)
+          //   .then(res => {
+          //     recipe.steps = res.data.steps
+          //     this.setState({Recipe: recipe})
+          //     API.updateRecipe(this.props.user.id, this.props.match.params.id, this.state.Recipe)
+          //     .then(res => {
+          //       console.log(res.data)
+          //     })
+          //
+          //     console.log(this.state.Recipe)
+          //   }).catch(err => console.log(err))
+          //
+          //
+          // }).catch(err => console.log(err))
+
     }
 
 getIngredients = (id) => {
   API.getIngredients(id)
     .then(res => {
-      console.log(res.data);
+
     }).catch(err => {
       console.log(err)
     });
@@ -61,7 +74,7 @@ getIngredients = (id) => {
 getSteps = (publisher, url) => {
   API.getSteps(publisher, url)
     .then(res => {
-      console.log(res.data);
+
     }).catch(err => {
       console.log(err)
     });
@@ -107,8 +120,13 @@ render() {
             <h3> Please wait while we retrieve the recipe steps</h3>
 
         )}
+        <div className="anchor">
+        <a className= "specificrecipeheaders" href={this.state.Recipe.source_url}> Source Website </a>
+        </div>
+    </div>
 
-      </div>
+
+
       <div className="back">
         <span>
       <a href="/recipes"> Click here to go back to your favorite recipes!</a>
